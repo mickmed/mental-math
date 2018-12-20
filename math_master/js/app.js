@@ -1,3 +1,4 @@
+//test
 let play = () => {
     //make random numbers
     let randomNum = (min, max) => {
@@ -178,7 +179,7 @@ let play = () => {
                         eqWrapper.lastChild.lastChild.innerText = '0';
                         document.querySelector('.bonus-msg').innerText = "Sorry - you must get 5 correct answers to play bonus";
                         // console.log(eqWrapper.lastChild.lastChild.previousSibling.firstChild.value);
-                        
+
 
                     }
                 });
