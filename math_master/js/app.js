@@ -107,9 +107,13 @@ let play = () => {
                 document.querySelectorAll(".equation")[eqWrapperLength].appendChild(check).innerHTML = '<i class="fas fa-skull-crossbones"></i>';
 
                 document.querySelectorAll(".check-btn")[eqWrapperLength].innerText = '0';
+
             }
-            //turn off buttons after click
+            //turn off buttons after each checked click
             document.querySelectorAll(".check-btn")[eqWrapperLength].style.pointerEvents = "none";
+            document.querySelectorAll(".equation")[eqWrapperLength].style.backgroundColor = "lightblue";
+            document.querySelectorAll(".equation")[eqWrapperLength].style.borderRadius = "20px";
+            document.querySelectorAll(".answer")[eqWrapperLength].style.color = "blue";
 
 
 
@@ -154,7 +158,7 @@ let play = () => {
                
                 //event listener for bonus points
                 console.log(eqWrapper.lastChild.lastChild.previousSibling);
-                eqWrapper.lastChild.lastChild.addEventListener("click", function() {
+                eqWrapper.lastChild.lastChild.addEventListener("click", () => {
                     let userInputArray = document.querySelectorAll('input');
                     //check if all five equations are correct
                     let missingInput = () => {
@@ -169,7 +173,7 @@ let play = () => {
                    
                     console.log(missingInput());
                     if(missingInput() === true){
-                        eqWrapper.lastChild.lastChild.innerText = '500';
+                        eqWrapper.lastChild.lastChild.innerText = '200';
                         console.log(total);
                         console.log(eqWrapper.lastChild.lastChild.previousSibling.value);
                         if(total === eqWrapper.lastChild.lastChild.previousSibling.firstChild.value){console.log('wow');
@@ -190,39 +194,186 @@ let play = () => {
         });
     }
     checkWin(removedValue, eqWrapperLength);
+
+   
+    
+
+
 }
 
 play();
-
-
-
-
-///////////////////FISH TIMER ANIMATION///////////////////////
-let fish = document.querySelector('.fish');
-let timer = document.querySelector('.timer');
-// fish.style.right = "50px";
-console.log(fish);
-let fishpic = 10;
-
-let fishInt = () => {
-    console.log(timer);
-    let movefish = () => {
-        if (fishpic == 600) {
-            clearInterval(int);
-            // btmLeftFish();
-            timer.innerText = "sorry, you're out of time";
-            timedOut();
-        } else {
-            fishpic++;
-            
-            fish.style.left = fishpic*2 + 'px';
-            timer.innerText = fishpic/10;
+ let timedOut = () => {
+        
+        document.querySelector('.eq-wrapper').lastChild.lastChild.style.pointerEvents = "none";
+        let eqDivs = document.querySelectorAll(".equation");
+        for(i=0;i<eqDivs.length;i++){
+            eqDivs[i].style.pointerEvents = "none";
         }
-    
     }
-    let int = setInterval(movefish, 100);
+
+
+
+
+let timer = () => {
+        let fish = document.querySelector('.fish');
+        let timerText = document.querySelector('.timer');
+        // fish.style.right = "50px";
+        console.log(fish);
+        let fishpic = 10;
+
+        let fishInt = () => {
+            console.log(timer);
+            let movefish = () => {
+                if (fishpic == 600) {
+                    clearInterval(int);
+                    // btmLeftFish();
+                    timerText.innerText = "sorry, you're out of time";
+                    timedOut();
+                } else {
+                    fishpic++;
+                    
+                    fish.style.left = fishpic + 'px';
+                    timerText.innerText = fishpic/10;
+                }
+            
+            }
+            let int = setInterval(movefish, 100);
+        }
+        fishInt();
+    }
+    timer();
+
+let reset = () => {
+    document.querySelector('.reset-btn').addEventListener('click', () => {
+        location.reload();
+    })
 }
-fishInt();
+reset();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let createDuck = () => {
+        //add duck class
+        let body = document.body;
+        let duckDiv = document.createElement('div');
+        duckDiv.classList.add('duck');
+
+
+        //set initial duck position and append deck to body
+        duckDiv.style.left = Math.random() * window.innerWidth + 'px';
+        duckDiv.style.top = Math.random() * window.innerHeight + 'px';
+        
+        body.appendChild(duckDiv);
+
+
+        let moveDuck = () => {
+            let moveLeft = Math.random() * window.innerWidth;
+            let moveTop = Math.random() * window.innerHeight;
+            //make duck fly left or right
+            if (parseInt(duckDiv.style.left) < moveLeft) {
+
+                duckDiv.classList.add('right');
+            } else {
+                duckDiv.classList.remove('right');
+            }
+        
+
+            //set transition speed in CSS according to distance travelled
+            let leftDist = Math.abs(moveLeft - parseInt(duckDiv.style.left));
+            let topDist = Math.abs(moveTop - parseInt(duckDiv.style.top));
+            let speed = ((leftDist + topDist) / 2);
+            if (speed > 1000) {
+                speed = 1000;
+            }
+            console.log(speed);
+            //move duck by setting new position
+            duckDiv.style.left = moveLeft + 'px';
+            duckDiv.style.top = moveTop + 'px';
+            duckDiv.style.transition = `top ${speed*10}ms, left ${speed*10}ms`;
+            
+            //return average distance as speed for interval (half of transition speed);
+            return speed*5;
+
+          }
+
+        setInterval(function() {
+            moveDuck();
+        }, moveDuck());
+
+        return duckDiv;
+    }
+
+    //make ducks and make them clickable
+    for (i = 0; i < 5; i++) {
+        createDuck().addEventListener('click', function(e) {
+            e.target.classList.add('shot');
+            //delay removal of duck explosion
+            setTimeout(function() {
+                e.target.remove();
+                checkForWinner();
+            }, 1000)
+        });
+
+        let checkForWinner = () => {
+            console.log(document.querySelectorAll('body .duck').length);
+            if (document.querySelectorAll('body .duck').length === 0) {
+                alert('YOU KINDA WIN.... BUT YOU ARE KILLING DUCKS SO....')
+            }
+        }
+    }
+  
+
 
 
 
