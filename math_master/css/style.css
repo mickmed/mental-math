@@ -8,7 +8,7 @@ body{
     background-color: lightblue;
     /* font-family: 'Ubuntu', sans-serif; */
     margin:20px;
-    background-color:brown;
+    background-color:blue;
     color:yellow;
 }
 main{
@@ -17,12 +17,16 @@ main{
 }
 
 header{
-    font-size:40px;
+    font-size:30px;
     display:flex;
     justify-content: space-between;
     letter-spacing:2px;
     font-family: 'Ubuntu', sans-serif;
     color:lightblue;
+    text-shadow:.5px .5px black;
+}
+.right-panel{
+    display:flex;
 }
 
 
@@ -30,6 +34,7 @@ header{
     display:flex;
     justify-content:center;
     flex-direction: column;
+    font-family: 'Ubuntu', sans-serif;
 }
 
 .equation{
@@ -45,24 +50,22 @@ header{
     /*margin:0px 50px;*/
     text-align:right;
     
-    
-    /*padding:20px;*/
-    font-size:80px;
+    font-size:70px;
 }
 
 
 .eq-wrapper div input[type='text']{
     width:140px;
     border:1px solid black;
-    height:75px;
-   font-size:80px;
+    height:60px;
+    font-size:70px;
     border-radius:10px;
     text-align: right;
     font-family: Times, serif;
-    background-color:lightyellow;
+    background-color:khaki;
     color:brown;
     text-shadow:1px 1px black;
-    box-shadow:1px 1px black;
+    box-shadow:.5px .5px black;
     letter-spacing: 4px;
 
 }
@@ -72,7 +75,7 @@ div.operand, div.equalsSign{
 }
 
 
-.check-btn{
+.check-btn, .reset-btn{
     background-color:lightblue;
     width:100px;
     height:50px;
@@ -81,14 +84,15 @@ div.operand, div.equalsSign{
     color:brown;
     /*text-shadow:1px 1px brown;*/
     border-radius:10px;
-    height:65px;
-    box-shadow:1px 1px black;
+    border:2px solid brown;
+    box-shadow:.5px .5px black;
+    margin-top:5px;
 }
 
 
 .bonus-msg{
     font-family: 'Ubuntu', sans-serif;
-    font-size:40px;
+    font-size:30px;
 
 }
 
@@ -97,9 +101,39 @@ div.operand, div.equalsSign{
 
 }
 
-.bottom-strip{
+footer{
+    position:absolute;
+    bottom:50px;
+    display:flex;
+
 
 }
+.footer-inner{
+    position:relative;
+    /*border:solid;*/
+}
+
+.fish{
+    /*height:30px;*/
+    position:absolute;
+    
+    left:10px;
+}
+
+.fishpic{
+    height:50px;
+}
+.timer{
+    font-size:30px;
+    font-family: 'Ubuntu', sans-serif;
+    letter-spacing:2px;
+    color:lightblue;
+}
+
+
+
+
+
 
 
 

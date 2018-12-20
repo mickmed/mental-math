@@ -113,9 +113,9 @@ let play = () => {
 
 
 
-           
+           //after last equation is complete
             if (eqWrapperLength === 4) {
-                //add dividing line
+                //add dividing line and bonus message
                 let line = document.createElement('div');
                 line.classList.add('line');
                 document.querySelectorAll(".equation")[eqWrapperLength].parentNode.appendChild(line).innerHTML = '<hr>';
@@ -151,12 +151,12 @@ let play = () => {
                         console.log(parseInt(totalScores[i].innerText))
                     }
                 }
-                console.log(total);
-
+               
+                //event listener for bonus points
                 console.log(eqWrapper.lastChild.lastChild.previousSibling);
                 eqWrapper.lastChild.lastChild.addEventListener("click", function() {
                     let userInputArray = document.querySelectorAll('input');
-
+                    //check if all five equations are correct
                     let missingInput = () => {
                         for(i=0;i<userInputArray.length-3;i++){
                             if(userInputArray[i].value === ''){
@@ -176,9 +176,9 @@ let play = () => {
                         }
                     }else{
                         eqWrapper.lastChild.lastChild.innerText = '0';
-                        document.querySelector('.bonus-msg').innerText = "Sorry - you must get 5 correct to play bonus";
+                        document.querySelector('.bonus-msg').innerText = "Sorry - you must get 5 correct answers to play bonus";
                         // console.log(eqWrapper.lastChild.lastChild.previousSibling.firstChild.value);
-
+                        
 
                     }
                 });
@@ -193,4 +193,37 @@ let play = () => {
 }
 
 play();
+
+
+
+
+///////////////////FISH TIMER ANIMATION///////////////////////
+let fish = document.querySelector('.fish');
+let timer = document.querySelector('.timer');
+// fish.style.right = "50px";
+console.log(fish);
+let fishpic = 10;
+
+let fishInt = () => {
+    console.log(timer);
+    let movefish = () => {
+        if (fishpic == 600) {
+            clearInterval(int);
+            // btmLeftFish();
+            timer.innerText = "sorry, you're out of time";
+            timedOut();
+        } else {
+            fishpic++;
+            
+            fish.style.left = fishpic*2 + 'px';
+            timer.innerText = fishpic/10;
+        }
+    
+    }
+    let int = setInterval(movefish, 100);
+}
+fishInt();
+
+
+
 // play();
