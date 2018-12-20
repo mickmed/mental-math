@@ -1,0 +1,110 @@
+*{
+    margin:0;
+    padding:0;
+    
+}
+
+body{
+    background-color: lightblue;
+    /* font-family: 'Ubuntu', sans-serif; */
+    margin:20px;
+    background-color:brown;
+    color:yellow;
+}
+main{
+    /*font-size:100px;*/
+    
+}
+
+header{
+    font-size:40px;
+    display:flex;
+    justify-content: space-between;
+    letter-spacing:2px;
+    font-family: 'Ubuntu', sans-serif;
+    color:lightblue;
+}
+
+
+.eq-wrapper{
+    display:flex;
+    justify-content:center;
+    flex-direction: column;
+}
+
+.equation{
+    text-align:right;
+    display:flex;
+    align-items:center;
+    padding:15px;
+}
+
+.equation div{
+    width:140px;
+    letter-spacing: 4px;
+    /*margin:0px 50px;*/
+    text-align:right;
+    
+    
+    /*padding:20px;*/
+    font-size:80px;
+}
+
+
+.eq-wrapper div input[type='text']{
+    width:140px;
+    border:1px solid black;
+    height:75px;
+   font-size:80px;
+    border-radius:10px;
+    text-align: right;
+    font-family: Times, serif;
+    background-color:lightyellow;
+    color:brown;
+    text-shadow:1px 1px black;
+    box-shadow:1px 1px black;
+    letter-spacing: 4px;
+
+}
+
+div.operand, div.equalsSign{
+    text-align:center;
+}
+
+
+.check-btn{
+    background-color:lightblue;
+    width:100px;
+    height:50px;
+    margin-left:50px;
+    font-size:30px;
+    color:brown;
+    /*text-shadow:1px 1px brown;*/
+    border-radius:10px;
+    height:65px;
+    box-shadow:1px 1px black;
+}
+
+
+.bonus-msg{
+    font-family: 'Ubuntu', sans-serif;
+    font-size:40px;
+
+}
+
+.check{
+    color:yellow;
+
+}
+
+.bottom-strip{
+
+}
+
+
+
+
+
+
+
+
