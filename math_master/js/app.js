@@ -84,25 +84,20 @@ let play = () => {
 
 
     let checkWin = (removedValue, eqWrapperLength) => {
-        //match user input with stored value
+        //add event listener to check button
         document.querySelectorAll(".check-btn")[eqWrapperLength].addEventListener("click", function() {
-
+            //get user input 
             let userInput = document.querySelectorAll(".user-input")[eqWrapperLength].value;
             let check = document.createElement('div');
             check.classList.add('check');
-
-
-
-
+            //compare user input to removed value
             if (parseInt(userInput) === parseInt(removedValue)) {
-
                 document.querySelectorAll(".equation")[eqWrapperLength].appendChild(check).innerHTML = '<i class="far fa-check-square"></i>';
                 let score = parseInt(checkForNumberSizes(eqDivArray)*10);
                 document.querySelectorAll(".check-btn")[eqWrapperLength].innerText = parseInt(score);
                 let accScore = document.querySelector('.score-board').innerText;
                 accScore = parseInt(accScore) + parseInt(score);
                 document.querySelector('.score-board').innerText = accScore;
-
             } else {
                 document.querySelectorAll(".equation")[eqWrapperLength].appendChild(check).innerHTML = '<i class="fas fa-skull-crossbones"></i>';
 
@@ -250,7 +245,7 @@ let reset = () => {
 }
 reset();
 
-
+//test
 
 
 
@@ -356,6 +351,7 @@ let createDuck = () => {
 
     //make ducks and make them clickable
     for (i = 0; i < 5; i++) {
+        console.log("hi");
         createDuck().addEventListener('click', function(e) {
             e.target.classList.add('shot');
             //delay removal of duck explosion
