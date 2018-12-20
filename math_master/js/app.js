@@ -1,4 +1,3 @@
-//test
 let play = () => {
     //make random numbers
     let randomNum = (min, max) => {
