@@ -82,7 +82,7 @@ let play = () => {
     }
     
 
-
+//////CHECK FOR WIN FUNCTION
     let checkWin = (removedValue, eqWrapperLength) => {
         //add event listener to check button
         document.querySelectorAll(".check-btn")[eqWrapperLength].addEventListener("click", function() {
@@ -93,6 +93,7 @@ let play = () => {
             //compare user input to removed value
             if (parseInt(userInput) === parseInt(removedValue)) {
                 document.querySelectorAll(".equation")[eqWrapperLength].appendChild(check).innerHTML = '<i class="far fa-check-square"></i>';
+                //update score
                 let score = parseInt(checkForNumberSizes(eqDivArray)*10);
                 document.querySelectorAll(".check-btn")[eqWrapperLength].innerText = parseInt(score);
                 let accScore = document.querySelector('.score-board').innerText;
@@ -107,11 +108,11 @@ let play = () => {
             //turn off buttons after each checked click
             document.querySelectorAll(".check-btn")[eqWrapperLength].style.pointerEvents = "none";
             document.querySelectorAll(".equation")[eqWrapperLength].style.backgroundColor = "lightblue";
-            document.querySelectorAll(".equation")[eqWrapperLength].style.borderRadius = "20px";
+            document.querySelectorAll(".equation")[eqWrapperLength].style.borderRadius = "10px";
             document.querySelectorAll(".answer")[eqWrapperLength].style.color = "blue";
 
 
-
+        ////POST EQUATION BONUS ACTIVITY
            //after last equation is complete
             if (eqWrapperLength === 4) {
                 //add dividing line and bonus message
@@ -151,7 +152,7 @@ let play = () => {
                     }
                 }
                
-                //event listener for bonus points
+                //add event listener for bonus points
                 console.log(eqWrapper.lastChild.lastChild.previousSibling);
                 eqWrapper.lastChild.lastChild.addEventListener("click", () => {
                     let userInputArray = document.querySelectorAll('input');
@@ -298,79 +299,79 @@ reset();
 
 
 
-let createDuck = () => {
-        //add duck class
-        let body = document.body;
-        let duckDiv = document.createElement('div');
-        duckDiv.classList.add('duck');
+// let createDuck = () => {
+//         //add duck class
+//         let body = document.body;
+//         let duckDiv = document.createElement('div');
+//         duckDiv.classList.add('duck');
 
 
-        //set initial duck position and append deck to body
-        duckDiv.style.left = Math.random() * window.innerWidth + 'px';
-        duckDiv.style.top = Math.random() * window.innerHeight + 'px';
+//         //set initial duck position and append deck to body
+//         duckDiv.style.left = Math.random() * window.innerWidth + 'px';
+//         duckDiv.style.top = Math.random() * window.innerHeight + 'px';
         
-        body.appendChild(duckDiv);
+//         body.appendChild(duckDiv);
 
 
-        let moveDuck = () => {
-            let moveLeft = Math.random() * window.innerWidth;
-            let moveTop = Math.random() * window.innerHeight;
-            //make duck fly left or right
-            if (parseInt(duckDiv.style.left) < moveLeft) {
+//         let moveDuck = () => {
+//             let moveLeft = Math.random() * window.innerWidth;
+//             let moveTop = Math.random() * window.innerHeight;
+//             //make duck fly left or right
+//             if (parseInt(duckDiv.style.left) < moveLeft) {
 
-                duckDiv.classList.add('right');
-            } else {
-                duckDiv.classList.remove('right');
-            }
+//                 duckDiv.classList.add('right');
+//             } else {
+//                 duckDiv.classList.remove('right');
+//             }
         
 
-            //set transition speed in CSS according to distance travelled
-            let leftDist = Math.abs(moveLeft - parseInt(duckDiv.style.left));
-            let topDist = Math.abs(moveTop - parseInt(duckDiv.style.top));
-            let speed = ((leftDist + topDist) / 2);
-            if (speed > 1000) {
-                speed = 1000;
-            }
-            console.log(speed);
-            //move duck by setting new position
-            duckDiv.style.left = moveLeft + 'px';
-            duckDiv.style.top = moveTop + 'px';
-            duckDiv.style.transition = `top ${speed*10}ms, left ${speed*10}ms`;
+//             //set transition speed in CSS according to distance travelled
+//             let leftDist = Math.abs(moveLeft - parseInt(duckDiv.style.left));
+//             let topDist = Math.abs(moveTop - parseInt(duckDiv.style.top));
+//             let speed = ((leftDist + topDist) / 2);
+//             if (speed > 1000) {
+//                 speed = 1000;
+//             }
+//             console.log(speed);
+//             //move duck by setting new position
+//             duckDiv.style.left = moveLeft + 'px';
+//             duckDiv.style.top = moveTop + 'px';
+//             duckDiv.style.transition = `top ${speed*10}ms, left ${speed*10}ms`;
             
-            //return average distance as speed for interval (half of transition speed);
-            return speed*5;
+//             //return average distance as speed for interval (half of transition speed);
+//             return speed*5;
 
-          }
+//           }
 
-        setInterval(function() {
-            moveDuck();
-        }, moveDuck());
+//         setInterval(function() {
+//             moveDuck();
+//         }, moveDuck());
 
-        return duckDiv;
-    }
+//         return duckDiv;
+//     }
 
-    //make ducks and make them clickable
-    for (i = 0; i < 5; i++) {
-        console.log("hi");
-        createDuck().addEventListener('click', function(e) {
-            e.target.classList.add('shot');
-            //delay removal of duck explosion
-            setTimeout(function() {
-                e.target.remove();
-                checkForWinner();
-            }, 1000)
-        });
+//     //make ducks and make them clickable
+//     for (i = 0; i < 5; i++) {
+//         console.log("hi");
+//         createDuck().addEventListener('click', function(e) {
+//             e.target.classList.add('shot');
+//             //delay removal of duck explosion
+//             setTimeout(function() {
+//                 e.target.remove();
+//                 checkForWinner();
+//             }, 1000)
+//         });
 
-        let checkForWinner = () => {
-            console.log(document.querySelectorAll('body .duck').length);
-            if (document.querySelectorAll('body .duck').length === 0) {
-                alert('YOU KINDA WIN.... BUT YOU ARE KILLING DUCKS SO....')
-            }
-        }
-    }
+//         let checkForWinner = () => {
+//             console.log(document.querySelectorAll('body .duck').length);
+//             if (document.querySelectorAll('body .duck').length === 0) {
+//                 alert('YOU KINDA WIN.... BUT YOU ARE KILLING DUCKS SO....')
+//             }
+//         }
+//     }
   
 
 
 
 
-// play();
+// // play();

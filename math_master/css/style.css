@@ -6,11 +6,11 @@
 
 body{
     background-color: lightblue;
-    /* font-family: 'Ubuntu', sans-serif; */
+   
     margin:20px;
     background-color:blue;
     color:yellow;
-    /*width:100vw;*/
+   
 }
 main{
     /*font-size:100px;*/
@@ -23,17 +23,22 @@ header{
     justify-content: space-between;
     letter-spacing:2px;
     font-family: 'Ubuntu', sans-serif;
-    color:lightblue;
+    color:darkred;
     text-shadow:.5px .5px black;
     margin-bottom:10px;
+    border-radius:5px;
+    background-color:lemonchiffon;
+    line-height: 40px;
+    padding:10px;
 }
 .right-panel{
     display:flex;
 }
 .score-board{
     font-size:50px;
-    line-height: 45px;
+    line-height: 40px;
 }
+
 
 
 .eq-wrapper{
@@ -85,7 +90,7 @@ div.operand, div.equalsSign{
 .check-btn, .reset-btn{
     background-color:lightblue;
     width:100px;
-    height:50px;
+    height:55px;
     margin-left:50px;
     font-size:30px;
     color:brown;
@@ -111,6 +116,13 @@ div.operand, div.equalsSign{
 .check{
     color:yellow;
 
+}
+
+.fa-skull-crossbones{
+    color:red;
+}
+.fa-check-square{
+    color:green;
 }
 
 hr{
@@ -149,29 +161,114 @@ footer{
     color:lightblue;
 }
 
+@media screen and (max-width: 1024px) { 
+    body{
+        margin:20px;
+    }
+    header{
+        display:flex;
+        justify-content:space-between;
+        font-size:30px;
+        
+        color:darkred;
+        text-shadow:0px 0px;
+        padding:10px;
+    }
+    .title{
+        line-height:45px;
+    }
+    .score-board{
+        font-size:35px;
+        line-height: 45px;
+    }
+    .reset-btn{
+        height:40px;
+        font-size:30px;
+        width:80px;
+        line-height:10px;
+        border:1px solid darkred;
+        margin-top:2px;
+        border-radius:4px;
+
+    }
+    .eq-wrapper{
+        padding:0px 20px;
+        border-radius:4px;
+        margin:5px;
+
+    }
+
+    .equation{
+        
+        padding:5px;
+    }
+
+    .equation div{
+        width:40px;
+        letter-spacing: 2px;
+        font-size:40px;
+        padding:0px 40px;
+    }
+
+
+    .eq-wrapper div input[type='text']{
+        width:80px;
+        border:1px solid black;
+        height:40px;
+        font-size:40px;
+        border-radius:6px;
+        letter-spacing:3px;
+        text-shadow:0px 0px;
+       
+        
+    }
+
+    div.operand, div.equalsSign{
+        text-align:center;
+    }
+    .check-btn{
+       
+        width:90px;
+        height:40px;
+        margin-left:30px;
+        font-size:30px;
+       
+        border-radius:10px;
+        border:1px solid brown;
+        border-radius:4px;
+        margin-top:0px;
+
+    }
+
+    .fish{
+        visibility:hidden;
+    }
+}
 
 @media screen and (max-width: 768px) { 
       body{
         margin:10px;
     }
     header{
-        font-size:15px;
-        background-color:lemonchiffon;
+        display:flex;
+        justify-content:space-around;
+        font-size:25px;
+        
         color:darkred;
         text-shadow:0px 0px;
         padding:5px;
     }
     .title{
-        line-height:25px;
+        line-height:35px;
     }
     .score-board{
-        font-size:15px;
-        line-height: 25px;
+        font-size:25px;
+        line-height: 35px;
     }
     .reset-btn{
-        height:20px;
-        font-size:10px;
-        width:30px;
+        height:30px;
+        font-size:20px;
+        width:50px;
         line-height:10px;
         border:1px solid darkred;
         margin-top:2px;
@@ -192,16 +289,16 @@ footer{
     .equation div{
         width:40px;
         letter-spacing: 2px;
-        font-size:20px;
-        padding:0px;
+        font-size:40px;
+        padding:20px;
     }
 
 
     .eq-wrapper div input[type='text']{
-        width:40px;
+        width:70px;
         border:1px solid black;
-        height:30px;
-        font-size:20px;
+        height:40px;
+        font-size:40px;
         border-radius:3px;
         letter-spacing:1px;
         text-shadow:0px 0px;
@@ -214,10 +311,10 @@ footer{
     }
     .check-btn{
        
-        width:35px;
+        width:55px;
         height:30px;
-        margin-left:10px;
-        font-size:10px;
+        margin-left:30px;
+        font-size:20px;
         color:brown;
         /*text-shadow:1px 1px brown;*/
         border-radius:10px;
@@ -232,18 +329,19 @@ footer{
     }
 }
 /*mobile friendly breakpoint*/
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 580px) {
     body{
         margin:10px;
-        display:flex;
-        justify-content:center;
+        ;
     }
     header{
+        display:flex;
+        justify-content:space-around;
         font-size:15px;
-        background-color:lemonchiffon;
+       
         color:darkred;
         text-shadow:0px 0px;
-        padding:5px;
+        /*padding:5px;*/
     }
     .title{
         line-height:25px;
@@ -266,10 +364,11 @@ footer{
         padding:0px 20px;
         border-radius:4px;
 
+
     }
 
     .equation{
-        
+        margin:2px 0px;
         padding:5px;
     }
 
@@ -302,15 +401,18 @@ footer{
         height:30px;
         margin-left:10px;
         font-size:10px;
-        color:brown;
-        /*text-shadow:1px 1px brown;*/
         border-radius:10px;
         border:1px solid brown;
         border-radius:4px;
         margin-top:0px;
 
     }
-
+    .bonus-msg{
+        font-size:15px;
+    }
+    .timer{
+        font-size:15px;
+    }
     .fish{
         visibility:hidden;
     }
