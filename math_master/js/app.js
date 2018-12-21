@@ -197,7 +197,7 @@ let play = () => {
    
     document.querySelectorAll('.user-input')[eqWrapperLength].addEventListener("keydown", function(e) {
        
-        if(e.code === "Enter"){
+        if(e.code === "Enter" || e.code === "Space"){
             eqWrapperLength.value = eqWrapperLength.value + 1
        
        checkCorrect(removedValue, eqWrapperLength);

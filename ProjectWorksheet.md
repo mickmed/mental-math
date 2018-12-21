@@ -14,7 +14,8 @@ You are **responsible** for scheduling time with your squad to seek approval for
 |Dec 18th| Pseudocode / actual code | Complete (MVP)
 |Dec 19th| Initial Clickable Model  | Complete (MVP)
 |Dec 20th| MVP | Complete
-|Dec 20th| Quicktime Video
+|Dec 20th| Quicktime Video | Complete
+|Dec 20th| Media Queries | Complete
 |Dec 21st| Present | Incomplete
 
 
@@ -102,18 +103,18 @@ Time frames are also key in the development cycle.  You have limited time to cod
 | --- | :---: |  :---: | :---: | :---: |
 | Making Equation with random input boxes | 1 | 4| 5 | 5 |
 | Checking for users input | 2 | 3| 4| 4 |
-| Styling | 3 | 3|  5|  |
-| Points System | 3 | 5|  5|  |
-| Adding Second Level with more equations | 4 | 3Hrs | 
-| Adding Splash Screen | 5 | 2hrs |
-| Total | H | 15hrs|  |  |
+| Styling | 3 | 3|  6| 6|
+| Points System | 3 | 5|  5| 5|
+| Adding Second Level with more equations | 4 | 3 | 3 | 3| 
+| Adding Splash Screen | 5 | 3 | n/a | n/a |
+| Total | H | 15hrs|  21| 23 | 23 | 23 |
 
 ## Helper Functions
 Helper functions should be generic enough that they can be reused in other applications. Use this section to document all helper functions that fall into this category.
 
 | Function | Description | 
 | --- | :---: |  
-| Random Generator | This will generate random numbers and random deletions| 
+| Replace With Input Box | Changes innerText of random Number to input type="text| Remove Index From Array | Removes a random element |
 
 ## Additional Libraries
  Use this section to list all supporting libraries and thier role in the project. 
