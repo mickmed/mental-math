@@ -1,7 +1,7 @@
 //set array to collect correct answers
 let allCorrectArray = [];
 
-//main play function
+//MAIN PLAY FUNCTIONS
 let play = () => {
     //make random numbers
     let randomNum = (min, max) => {
@@ -67,8 +67,6 @@ let play = () => {
     let randomIndex = Math.floor(Math.random() * eqDivArray.length)
     let removedValue = removeIndexFromDivArray(randomIndex, eqDivArray);
 
-
-
     //get number sizes, if biggest number is 1 digit user gets 10, 20 for 2, 30 for 3;
     let checkForNumberSizes = (eqDivArray) => {
         let nums = [];
@@ -85,7 +83,6 @@ let play = () => {
         return longest;
     }
    
-
 //////CHECK FOR WIN FUNCTION
     let checkWin = (removedValue, eqWrapperLength) => {
         //add event listener to check button
@@ -142,24 +139,19 @@ let play = () => {
                 for (i = 0; i < totChildren.length - 2; i++) {
                     totChildren[i].style.visibility = "hidden";
                 }
-
                
                 //add total scores
                 let totalScores = document.querySelectorAll(".answer");
                 let total = 0;
                 for (i = 0; i < totalScores.length-1; i++) {
-                    console.log(totalScores[i].children.length);
                     if (totalScores[i].children.length > 0) {
-                        console.log(totalScores[i].children[0].value);
                         total += parseInt(totalScores[i].children[0].value);
                     }else{
                         total += parseInt(totalScores[i].innerText);
-                        console.log(parseInt(totalScores[i].innerText))
                     }
                 }
                
                 //add event listener for bonus points
-                console.log(eqWrapper.lastChild.lastChild.previousSibling);
                 eqWrapper.lastChild.lastChild.addEventListener("click", () => {
                     let userInputArray = document.querySelectorAll('input');
                     //check if all five equations are correct
@@ -172,15 +164,13 @@ let play = () => {
                             }
                         }
                     }
-                   missingInput();
-                   console.log(allCorrectArray);
+                    missingInput();
+                   
                     if(missingInput() === false){
                         if(allCorrectArray.length === 5){
-                           // console.log(total);
-                           // console.log(eqWrapper.lastChild.lastChild.previousSibling.firstChild.value);
-                        
+                                                   
                             if(total === parseInt(eqWrapper.lastChild.lastChild.previousSibling.firstChild.value)){
-                                console.log('hi');
+                                
                                 document.querySelector('.bonus-msg').innerText = "Yay, you got the bonus";
                                 let bonusScore = 200;
                                 //change button message to bonus score amount
@@ -193,69 +183,51 @@ let play = () => {
                     }else{
                         eqWrapper.lastChild.lastChild.innerText = '0';
                         document.querySelector('.bonus-msg').innerText = "Sorry - you must get 5 correct answers to play bonus";
-                        // console.log(eqWrapper.lastChild.lastChild.previousSibling.firstChild.value);
-
-
                     }
                 });
                 //end play
                 return false;
             }
-
             play();
         });
     }
     checkWin(removedValue, eqWrapperLength);
-
-   
-    
-
-
 }
 
 play();
 
 ////TIME OUT FUNCTIONS
  let timedOut = () => {
-        
-        document.querySelector('.eq-wrapper').lastChild.lastChild.style.pointerEvents = "none";
-        let eqDivs = document.querySelectorAll(".equation");
-        for(i=0;i<eqDivs.length;i++){
-            eqDivs[i].style.pointerEvents = "none";
-        }
+    document.querySelector('.eq-wrapper').lastChild.lastChild.style.pointerEvents = "none";
+    let eqDivs = document.querySelectorAll(".equation");
+    for(i=0;i<eqDivs.length;i++){
+        eqDivs[i].style.pointerEvents = "none";
     }
-
-
-
+}
 
 let timer = () => {
-        let fish = document.querySelector('.fish');
-        let timerText = document.querySelector('.timer');
-        // fish.style.right = "50px";
-        console.log(fish);
-        let fishpic = 10;
-
-        let fishInt = () => {
-            console.log(timer);
-            let movefish = () => {
-                if (fishpic == 600) {
-                    clearInterval(int);
-                    // btmLeftFish();
-                    timerText.innerText = "sorry, you're out of time";
-                    timedOut();
-                } else {
-                    fishpic++;
-                    
-                    fish.style.left = fishpic + 'px';
-                    timerText.innerText = fishpic/10;
-                }
-            
+    let fish = document.querySelector('.fish');
+    let timerText = document.querySelector('.timer');
+    let fishpic = 10;
+    let fishInt = () => {
+        let movefish = () => {
+            if (fishpic == 600) {
+                clearInterval(int);
+                // btmLeftFish();
+                timerText.innerText = "sorry, you're out of time";
+                timedOut();
+            } else {
+                fishpic++;
+                
+                fish.style.left = fishpic + 'px';
+                timerText.innerText = fishpic/10;
             }
-            let int = setInterval(movefish, 100);
         }
-        fishInt();
+        let int = setInterval(movefish, 100);
     }
-    timer();
+    fishInt();
+}
+timer();
 
 let reset = () => {
     document.querySelector('.reset-btn').addEventListener('click', () => {
@@ -264,7 +236,6 @@ let reset = () => {
 }
 reset();
 
-//test
 
 
 
@@ -301,95 +272,3 @@ reset();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let createDuck = () => {
-//         //add duck class
-//         let body = document.body;
-//         let duckDiv = document.createElement('div');
-//         duckDiv.classList.add('duck');
-
-
-//         //set initial duck position and append deck to body
-//         duckDiv.style.left = Math.random() * window.innerWidth + 'px';
-//         duckDiv.style.top = Math.random() * window.innerHeight + 'px';
-        
-//         body.appendChild(duckDiv);
-
-
-//         let moveDuck = () => {
-//             let moveLeft = Math.random() * window.innerWidth;
-//             let moveTop = Math.random() * window.innerHeight;
-//             //make duck fly left or right
-//             if (parseInt(duckDiv.style.left) < moveLeft) {
-
-//                 duckDiv.classList.add('right');
-//             } else {
-//                 duckDiv.classList.remove('right');
-//             }
-        
-
-//             //set transition speed in CSS according to distance travelled
-//             let leftDist = Math.abs(moveLeft - parseInt(duckDiv.style.left));
-//             let topDist = Math.abs(moveTop - parseInt(duckDiv.style.top));
-//             let speed = ((leftDist + topDist) / 2);
-//             if (speed > 1000) {
-//                 speed = 1000;
-//             }
-//             console.log(speed);
-//             //move duck by setting new position
-//             duckDiv.style.left = moveLeft + 'px';
-//             duckDiv.style.top = moveTop + 'px';
-//             duckDiv.style.transition = `top ${speed*10}ms, left ${speed*10}ms`;
-            
-//             //return average distance as speed for interval (half of transition speed);
-//             return speed*5;
-
-//           }
-
-//         setInterval(function() {
-//             moveDuck();
-//         }, moveDuck());
-
-//         return duckDiv;
-//     }
-
-//     //make ducks and make them clickable
-//     for (i = 0; i < 5; i++) {
-//         console.log("hi");
-//         createDuck().addEventListener('click', function(e) {
-//             e.target.classList.add('shot');
-//             //delay removal of duck explosion
-//             setTimeout(function() {
-//                 e.target.remove();
-//                 checkForWinner();
-//             }, 1000)
-//         });
-
-//         let checkForWinner = () => {
-//             console.log(document.querySelectorAll('body .duck').length);
-//             if (document.querySelectorAll('body .duck').length === 0) {
-//                 alert('YOU KINDA WIN.... BUT YOU ARE KILLING DUCKS SO....')
-//             }
-//         }
-//     }
-  
-
-
-
-
-// // play();

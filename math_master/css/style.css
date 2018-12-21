@@ -1,22 +1,14 @@
 *{
     margin:0;
     padding:0;
-    
 }
 
 body{
     background-color: lightblue;
-   
     margin:20px;
     background-color:blue;
     color:yellow;
-   
 }
-main{
-    /*font-size:100px;*/
-    
-}
-
 header{
     font-size:30px;
     display:flex;
@@ -38,16 +30,12 @@ header{
     font-size:50px;
     line-height: 40px;
 }
-
-
-
 .eq-wrapper{
     display:flex;
     justify-content:center;
     flex-direction: column;
     font-family: 'Ubuntu', sans-serif;
 }
-
 .equation{
     text-align:right;
     display:flex;
@@ -55,17 +43,13 @@ header{
     padding:12px 15px;
     margin-bottom: 3px;
 }
-
 .equation div{
     width:140px;
     letter-spacing: 4px;
     /*margin:0px 50px;*/
     text-align:right;
-    
     font-size:70px;
 }
-
-
 .eq-wrapper div input[type='text']{
     width:140px;
     border:1px solid black;
@@ -79,15 +63,10 @@ header{
     text-shadow:1px 1px black;
     border:1px solid darkred;
     letter-spacing: 4px;
-    
-
 }
-
 div.operand, div.equalsSign{
     text-align:center;
 }
-
-
 .check-btn, .reset-btn{
     background-color:lightblue;
     width:100px;
@@ -100,25 +79,20 @@ div.operand, div.equalsSign{
     border:2px solid brown;
     box-shadow:.5px .5px black;
     margin-top:5px;
-
 }
 .reset-btn{
     height:40px;
     font-size:20px;
+    border:1px solid darkred;
+    border-radius:4px;
 }
-
-
 .bonus-msg{
     font-family: 'Ubuntu', sans-serif;
     font-size:30px;
-
 }
-
 .check{
     color:yellow;
-
 }
-
 .fa-skull-crossbones{
     color:red;
 }
@@ -130,28 +104,20 @@ hr{
     background-color:yellow;
     height:5px;
     margin-top:5px;
-
 }
 
 footer{
     position:absolute;
     bottom:50px;
     display:flex;
-
-
 }
 .footer-inner{
-    position:relative;
-    /*border:solid;*/
+    position:relative;  
 }
-
 .fish{
-    /*height:30px;*/
     position:absolute;
-    
     left:10px;
 }
-
 .fishpic{
     height:50px;
 }
@@ -162,16 +128,13 @@ footer{
     color:lightblue;
 }
 
+/*////MEDIA QUERIES START HERE*/
 @media screen and (max-width: 1024px) { 
     body{
         margin:20px;
     }
     header{
-        display:flex;
-        justify-content:space-between;
         font-size:30px;
-        
-        color:darkred;
         text-shadow:0px 0px;
         padding:10px;
     }
@@ -187,31 +150,22 @@ footer{
         font-size:30px;
         width:80px;
         line-height:10px;
-        border:1px solid darkred;
         margin-top:2px;
-        border-radius:4px;
-
     }
     .eq-wrapper{
         padding:0px 20px;
         border-radius:4px;
         margin:5px;
-
     }
-
-    .equation{
-        
+    .equation{    
         padding:5px;
     }
-
     .equation div{
         width:40px;
         letter-spacing: 2px;
         font-size:40px;
         padding:0px 40px;
     }
-
-
     .eq-wrapper div input[type='text']{
         width:80px;
         border:1px solid black;
@@ -219,28 +173,21 @@ footer{
         font-size:40px;
         border-radius:6px;
         letter-spacing:3px;
-        text-shadow:0px 0px;
-       
-        
+        text-shadow:0px 0px;       
     }
-
     div.operand, div.equalsSign{
         text-align:center;
     }
     .check-btn{
-       
         width:90px;
         height:40px;
         margin-left:30px;
         font-size:30px;
-       
         border-radius:10px;
         border:1px solid brown;
         border-radius:4px;
         margin-top:0px;
-
     }
-
     .fish{
         visibility:hidden;
     }
@@ -254,7 +201,6 @@ footer{
         display:flex;
         justify-content:space-around;
         font-size:25px;
-        
         color:darkred;
         text-shadow:0px 0px;
         padding:5px;
@@ -274,27 +220,20 @@ footer{
         border:1px solid darkred;
         margin-top:2px;
         border-radius:4px;
-
     }
     .eq-wrapper{
         padding:0px 20px;
         border-radius:4px;
-
     }
-
-    .equation{
-        
+    .equation{   
         padding:5px;
     }
-
     .equation div{
         width:40px;
         letter-spacing: 2px;
         font-size:40px;
         padding:20px;
     }
-
-
     .eq-wrapper div input[type='text']{
         width:70px;
         border:1px solid black;
@@ -302,29 +241,23 @@ footer{
         font-size:40px;
         border-radius:3px;
         letter-spacing:1px;
-        text-shadow:0px 0px;
-       
-        
+        text-shadow:0px 0px;   
     }
 
     div.operand, div.equalsSign{
         text-align:center;
     }
     .check-btn{
-       
         width:55px;
         height:30px;
         margin-left:30px;
         font-size:20px;
         color:brown;
-        /*text-shadow:1px 1px brown;*/
         border-radius:10px;
         border:1px solid brown;
         border-radius:4px;
         margin-top:0px;
-
     }
-
     .fish{
         visibility:hidden;
     }
@@ -333,7 +266,7 @@ footer{
 @media screen and (max-width: 580px) {
     body{
         margin:10px;
-        ;
+        
     }
     header{
         display:flex;
@@ -359,28 +292,21 @@ footer{
         border:1px solid darkred;
         margin-top:2px;
         border-radius:4px;
-
     }
     .eq-wrapper{
         padding:0px 20px;
         border-radius:4px;
-
-
     }
-
     .equation{
         margin:2px 0px;
         padding:5px;
     }
-
     .equation div{
         width:40px;
         letter-spacing: 2px;
         font-size:20px;
         padding:0px;
     }
-
-
     .eq-wrapper div input[type='text']{
         width:40px;
         border:1px solid black;
@@ -388,16 +314,13 @@ footer{
         font-size:20px;
         border-radius:3px;
         letter-spacing:1px;
-        text-shadow:0px 0px;
-       
-        
+        text-shadow:0px 0px;   
     }
 
     div.operand, div.equalsSign{
         text-align:center;
     }
     .check-btn{
-       
         width:35px;
         height:30px;
         margin-left:10px;
@@ -406,7 +329,6 @@ footer{
         border:1px solid brown;
         border-radius:4px;
         margin-top:0px;
-
     }
     .bonus-msg{
         font-size:15px;
