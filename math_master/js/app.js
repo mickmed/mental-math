@@ -1,3 +1,7 @@
+//set array to collect correct answers
+let allCorrectArray = [];
+
+//main play function
 let play = () => {
     //make random numbers
     let randomNum = (min, max) => {
@@ -80,7 +84,7 @@ let play = () => {
         let longest = nums.reduce(function(a, b) { return a.length > b.length ? a : b; });
         return longest;
     }
-    
+   
 
 //////CHECK FOR WIN FUNCTION
     let checkWin = (removedValue, eqWrapperLength) => {
@@ -90,9 +94,11 @@ let play = () => {
             let userInput = document.querySelectorAll(".user-input")[eqWrapperLength].value;
             let check = document.createElement('div');
             check.classList.add('check');
+            
             //compare user input to removed value
             if (parseInt(userInput) === parseInt(removedValue)) {
                 document.querySelectorAll(".equation")[eqWrapperLength].appendChild(check).innerHTML = '<i class="far fa-check-square"></i>';
+                allCorrectArray.push('correct');
                 //update score
                 let score = parseInt(checkForNumberSizes(eqDivArray)*10);
                 document.querySelectorAll(".check-btn")[eqWrapperLength].innerText = parseInt(score);
@@ -160,19 +166,29 @@ let play = () => {
                     let missingInput = () => {
                         for(i=0;i<userInputArray.length-3;i++){
                             if(userInputArray[i].value === ''){
-                                return false;
-                            }else{
                                 return true;
+                            }else{
+                                return false;
                             }
                         }
                     }
-                   
-                    console.log(missingInput());
-                    if(missingInput() === true){
-                        eqWrapper.lastChild.lastChild.innerText = '200';
-                        console.log(total);
-                        console.log(eqWrapper.lastChild.lastChild.previousSibling.value);
-                        if(total === eqWrapper.lastChild.lastChild.previousSibling.firstChild.value){console.log('wow');
+                   missingInput();
+                   console.log(allCorrectArray);
+                    if(missingInput() === false){
+                        if(allCorrectArray.length === 5){
+                           // console.log(total);
+                           // console.log(eqWrapper.lastChild.lastChild.previousSibling.firstChild.value);
+                        
+                            if(total === parseInt(eqWrapper.lastChild.lastChild.previousSibling.firstChild.value)){
+                                console.log('hi');
+                                document.querySelector('.bonus-msg').innerText = "Yay, you got the bonus";
+                                let bonusScore = 200;
+                                //change button message to bonus score amount
+                                eqWrapper.lastChild.lastChild.innerText = bonusScore;
+                                //add bonus points to scoreboard
+                                let currentScore = parseInt(document.querySelector('.score-board').innerText);
+                                document.querySelector('.score-board').innerText = currentScore + parseInt(bonusScore);
+                            }
                         }
                     }else{
                         eqWrapper.lastChild.lastChild.innerText = '0';
@@ -198,6 +214,8 @@ let play = () => {
 }
 
 play();
+
+////TIME OUT FUNCTIONS
  let timedOut = () => {
         
         document.querySelector('.eq-wrapper').lastChild.lastChild.style.pointerEvents = "none";

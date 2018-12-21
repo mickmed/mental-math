@@ -52,7 +52,8 @@ header{
     text-align:right;
     display:flex;
     align-items:center;
-    padding:15px;
+    padding:12px 15px;
+    margin-bottom: 3px;
 }
 
 .equation div{
