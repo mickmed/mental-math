@@ -11,9 +11,10 @@ let play = () => {
     let secondStoredNumber = randomNum(1, 100);
     let answerStored = parseInt(firstStoredNumber) + parseInt(secondStoredNumber);
 
-    //create wrapper div
+    //create wrapper div for equations
     let eqWrapper = document.querySelector('.eq-wrapper');
     let eqWrapperLength = eqWrapper.children.length;
+    
 
     let buildEquationDivs = (eqWrapper, eqWrapperLength) => {
         let equation = document.createElement('div');
@@ -83,10 +84,13 @@ let play = () => {
         return longest;
     }
    
-//////CHECK FOR WIN FUNCTION
-    let checkWin = (removedValue, eqWrapperLength) => {
-        //add event listener to check button
-        document.querySelectorAll(".check-btn")[eqWrapperLength].addEventListener("click", function() {
+//////CHECK FOR CORRECT ANSWER
+
+
+
+    //check if equation is correct
+    let checkCorrect = (removedValue, eqWrapperLength) => {
+      
             //get user input 
             let userInput = document.querySelectorAll(".user-input")[eqWrapperLength].value;
             let check = document.createElement('div');
@@ -104,9 +108,7 @@ let play = () => {
                 document.querySelector('.score-board').innerText = accScore;
             } else {
                 document.querySelectorAll(".equation")[eqWrapperLength].appendChild(check).innerHTML = '<i class="fas fa-skull-crossbones"></i>';
-
                 document.querySelectorAll(".check-btn")[eqWrapperLength].innerText = '0';
-
             }
             //turn off buttons after each checked click
             document.querySelectorAll(".check-btn")[eqWrapperLength].style.pointerEvents = "none";
@@ -127,14 +129,14 @@ let play = () => {
                 bonusMsg.classList.add('bonus-msg');
                 document.querySelectorAll(".equation")[eqWrapperLength].parentNode.appendChild(bonusMsg).innerHTML = 'Add Totals for Bonus';
 
-                 //make totals after five equations
+                //make totals after five equations
                 let totalsDiv = buildEquationDivs(eqWrapper, eqWrapperLength + 1);
                 let totalsDivArray = [totalsDiv.firstDivNumber, totalsDiv.secondDivNumber, totalsDiv.answer];
                 for (i = 0; i < totalsDivArray.length; i++) {
                     replaceWithInputBox(i, totalsDivArray);
                 }
 
-                //hide first two totals - use for advance level
+                //hide first two totals - use then later for advance level
                 let totChildren = eqWrapper.lastChild.children;
                 for (i = 0; i < totChildren.length - 2; i++) {
                     totChildren[i].style.visibility = "hidden";
@@ -154,7 +156,7 @@ let play = () => {
                 //add event listener for bonus points
                 eqWrapper.lastChild.lastChild.addEventListener("click", () => {
                     let userInputArray = document.querySelectorAll('input');
-                    //check if all five equations are correct
+                    //check if all five equations are completed and correct
                     let missingInput = () => {
                         for(i=0;i<userInputArray.length-3;i++){
                             if(userInputArray[i].value === ''){
@@ -188,16 +190,31 @@ let play = () => {
                 //end play
                 return false;
             }
+            
             play();
-        });
+        
     }
-    checkWin(removedValue, eqWrapperLength);
+   
+    document.querySelectorAll('.user-input')[eqWrapperLength].addEventListener("keydown", function(e) {
+       
+        if(e.code === "Enter"){
+            eqWrapperLength.value = eqWrapperLength.value + 1
+       
+       checkCorrect(removedValue, eqWrapperLength);
+       document.querySelectorAll('.user-input')[eqWrapperLength].disabled = "true";
+    }
+    });
+    //call check correct for each equation
+    document.querySelectorAll(".check-btn")[eqWrapperLength].addEventListener("click", () => {
+        checkCorrect(removedValue, eqWrapperLength);
+    });
 }
 
 play();
 
 ////TIME OUT FUNCTIONS
  let timedOut = () => {
+    //stop clickable buttons after
     document.querySelector('.eq-wrapper').lastChild.lastChild.style.pointerEvents = "none";
     let eqDivs = document.querySelectorAll(".equation");
     for(i=0;i<eqDivs.length;i++){
@@ -220,7 +237,7 @@ let timer = () => {
                 fishpic++;
                 
                 fish.style.left = fishpic + 'px';
-                timerText.innerText = fishpic/10;
+                timerText.innerText = 60-(fishpic/10).toFixed(0);
             }
         }
         let int = setInterval(movefish, 100);
