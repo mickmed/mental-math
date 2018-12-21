@@ -344,8 +344,17 @@ footer{
 
 /*KEY FRAMES HERE*/
 
+@keyframes boxspinner{
+    0%{transform:scale(1.05)}
+    25%{transform:scale(1.06)}
+    50%{transform:scale(1.07)}
+    75%{transform:scale(1.06)}
+    100%{{transform:scale(1.0)}}
+}
 
-
+.equation{
+    animation:boxspinner 100ms ease-in-out;
+}
 
 
 
