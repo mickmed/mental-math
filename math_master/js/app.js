@@ -304,11 +304,11 @@ let timer = () => {
             } else {
                 fishpic++;
 
-                fish.style.left = (fishpic/6) -9 + '%';
+                fish.style.left = (fishpic/6) -7 + '%';
                 timerText.innerText = 60 - (fishpic / 10).toFixed(0);
             }
         }
-        let int = setInterval(movefish, 10);
+        let int = setInterval(movefish, 100);
     }
     fishInt();
 }
