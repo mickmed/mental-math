@@ -300,11 +300,12 @@ let timer = () => {
                 clearInterval(int);
                 // btmLeftFish();
                 timerText.innerText = "sorry, you're out of time";
+                fish.style.visibility = "hidden";
                 timedOut();
             } else {
                 fishpic++;
 
-                fish.style.left = (fishpic/6) -7 + '%';
+                fish.style.left = (fishpic/6) -4 + '%';
                 timerText.innerText = 60 - (fishpic / 10).toFixed(0);
             }
         }
