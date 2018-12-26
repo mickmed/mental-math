@@ -1,223 +1,291 @@
 //set array to collect correct answers
 let allCorrectArray = [];
+let eqWrapper = document.querySelector('.eq-wrapper');
 
-//MAIN PLAY FUNCTIONS
-let play = () => {
-    //make random numbers
-    let randomNum = (min, max) => {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-    let firstStoredNumber = randomNum(1, 100);
-    let secondStoredNumber = randomNum(1, 100);
-    let answerStored = parseInt(firstStoredNumber) + parseInt(secondStoredNumber);
+let randomNum = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
-    //create wrapper div for equations
-    let eqWrapper = document.querySelector('.eq-wrapper');
-    let eqWrapperLength = eqWrapper.children.length;
-    
 
-    let buildEquationDivs = (eqWrapper, eqWrapperLength) => {
-        let equation = document.createElement('div');
-        equation.classList.add('equation');
-        document.querySelector('.eq-wrapper').appendChild(equation);
+let appendEqDiv = () => {
+    let eqDiv = document.createElement('div');
+    eqDiv.classList.add('equation');
+    document.querySelector('.eq-wrapper').appendChild(eqDiv);
+    return eqDiv;
+}
 
-        //build equation divs
-        let divObj = {};
-        let divClass = [
-            "firstDivNumber",
-            "operand",
-            "secondDivNumber",
-            "equalsSign",
-            "answer"
-        ];
-        let divText = [firstStoredNumber, "+", secondStoredNumber, "=", answerStored];
+let eqVals = () => {
+    let firstNum = randomNum(1, 100);
+    let secondNum = randomNum(1, 100);
+    let answer = firstNum + secondNum;
+    return [firstNum, secondNum, answer];
+}
 
-        for (i = 0; i < divClass.length; i++) {
-            divObj[divClass[i]] = document.createElement("div");
-            divObj[divClass[i]].classList.add(divClass[i]);
+let buildEqDiv = (eqDiv, eqVals) => {
+    let divObj = {};
+    let divClass = ["firstNumber", "operand", "secondNumber", "equalsSign", "answer"];
+    let divText = [eqVals[0], "+", eqVals[1], "=", eqVals[2]];
 
-            for (j = 0; j < divText.length; j++) {
-                if (i === j) {
-                    document
-                        .querySelectorAll(".equation")[eqWrapperLength]
-                        .appendChild(divObj[divClass[i]]).innerText = divText[j];
-                }
+    for (i = 0; i < divClass.length; i++) {
+        divObj[divClass[i]] = document.createElement("div");
+        divObj[divClass[i]].classList.add(divClass[i]);
+
+        for (j = 0; j < divText.length; j++) {
+            if (i === j) {
+
+                eqDiv.appendChild(divObj[divClass[i]]).innerText = divText[j];
             }
         }
-        let checkBtn = document.createElement("button");
-        checkBtn.classList.add("check-btn");
-        document.querySelectorAll(".equation")[eqWrapperLength].appendChild(checkBtn).innerText = "check";
-        return divObj;
     }
-    let divObj = buildEquationDivs(eqWrapper, eqWrapperLength);
+    return divObj;
+}
 
-    let eqDivArray = [];
-    eqDivArray.push(divObj.firstDivNumber, divObj.secondDivNumber, divObj.answer);
+let appendBtnToEqDiv = (eqDiv) => {
+    let checkBtn = document.createElement("button");
+    checkBtn.classList.add("check-btn");
+    eqDiv.appendChild(checkBtn).innerText = "check";
+    return checkBtn;
+}
 
-    let replaceWithInputBox = (randomIndex, array) => {
-        array[randomIndex].innerText = "";
-        array[randomIndex].innerHTML = "<input type='text' class='user-input'>";
-        return array;
+let appendChkIcon = () => {
+    let chkIcon = document.createElement('div');
+    chkIcon.classList.add('check');
+    return chkIcon;
+}
+
+//https:stackoverflow.com/questions/5778020/check-whether-an-input-string-contains-a-number-in-javascript
+let strHasNum = (divObj) => {
+    let eqDivArr = [];
+    for (let val in divObj) {
+        if (parseInt(divObj[val].innerText)) {
+            eqDivArr.push(divObj[val]);
+        }
     }
+    return eqDivArr;
+}
 
-    let removeIndexFromDivArray = (randomIndex, array) => {
-        let removedValue = array[randomIndex].innerText;
-        replaceWithInputBox(randomIndex, array);
-        return removedValue;
+let getNumsClass = (arr) => {
+    classNames = [];
+    arr.forEach((e) => {
+        classNames.push(e.className);
+    })
+    return classNames;
+}
+
+let removeIndexFromDivArray = (randomIndex, array) => {
+    let removedValue = array[randomIndex].innerText;
+
+    return removedValue;
+}
+
+let replaceWithInputBox = (randomIndex, array) => {
+    array[randomIndex].innerText = "";
+    array[randomIndex].innerHTML = "<input type='text' class='user-input'>";
+    array[randomIndex].firstChild.focus();
+    return array;
+}
+
+let getAnswer = () => {
+
+}
+//get number sizes, if biggest number is 1 digit user gets 10, 20 for 2, 30 for 3;
+let chkNumLength = (eqDivArray) => {
+    let nums = [];
+    eqDivArray.forEach((el) => {
+        if (el.children.length > 0) {
+            nums.push(el.children[0].value.length)
+        } else {
+            nums.push(el.innerText.length);
+        }
+    })
+    //https://stackoverflow.com/questions/6521245/finding-longest-string-in-array
+    let longest = nums.reduce(function(a, b) { return a.length > b.length ? a : b; });
+    return longest;
+}
+
+let updateScrBrd = (score) => {
+    let accScore = eq.scoreBoard.innerText;
+    eq.scoreBoard.innerText = parseInt(accScore) + parseInt(score);
+
+}
+
+let chkCorrect = (value1, value2) => {
+    return parseInt(value1) === parseInt(value2) ? true : false;
+}
+
+let styleAnswer = (chkCorrect, checkIcon, eqDiv, checkBtn, eqDivArray, bonus) => {
+    if (chkCorrect === true) {
+        eqDiv.appendChild(checkIcon).innerHTML = '<i class="far fa-check-square"></i>';
+        let score = parseInt(chkNumLength(eqDivArray) * 10);
+        updateScrBrd(score);
+        checkBtn.innerText = parseInt(score);
+        if(bonus !== 'bonus'){
+            allCorrectArray.push('correct');
+        }
+    } else {
+        eqDiv.appendChild(checkIcon).innerHTML = '<i class="fas fa-skull-crossbones"></i>';
+        checkBtn.innerText = '0';
     }
-    let randomIndex = Math.floor(Math.random() * eqDivArray.length)
-    let removedValue = removeIndexFromDivArray(randomIndex, eqDivArray);
+}
 
-    //get number sizes, if biggest number is 1 digit user gets 10, 20 for 2, 30 for 3;
-    let checkForNumberSizes = (eqDivArray) => {
-        let nums = [];
-        eqDivArray.forEach((el) => {
-            if (el.children.length > 0) {
-                nums.push(el.children[0].value.length)
-            } else {
-                nums.push(el.innerText.length);
+let styleChkdEq = (checkBtn, eqDiv, answer) => {
+    console.log('here');
+    checkBtn.style.pointerEvents = "none";
+    eqDiv.style.backgroundColor = "lightblue";
+    eqDiv.style.borderRadius = "10px";
+    answer.style.color = "blue";
+    if (answer.children.length > 0) {
+        answer.children[0].style.color = "blue";
+    }
+}
+
+let addDivLine = () => {
+    let line = document.createElement('div');
+    line.classList.add('line');
+    eqWrapper.appendChild(line).innerHTML = '<hr>';
+
+}
+
+let addBonusMsg = (bnsMsg) => {
+    let bonusMsg = document.createElement('div');
+    bonusMsg.classList.add('bonus-msg');
+    eqWrapper.appendChild(bonusMsg).innerHTML = bnsMsg;
+}
+
+//sum total scores by className
+let sumTotals = (divClass) => {
+    let totalScores = document.querySelectorAll(divClass);
+    let total = 0;
+    for (i = 0; i < totalScores.length; i++) {
+        if (totalScores[i].children.length > 0) {
+            if (isNaN(parseInt(totalScores[i].children[0].value))) {
+                totalScores[i].children[0].value = 0;
             }
-        })
+            total += parseInt(totalScores[i].children[0].value);
+        } else {
+            total += parseInt(totalScores[i].innerText);
+        }
+    }
+    return total;
+}
+
+//make array of classes to be summed
+let numsTotalsArr = (arr) => {
+    let numsTotals = [];
+    arr.forEach((e) => {
+        numsTotals.push(sumTotals('.' + e));
+    })
+    return numsTotals;
+}
+
+let appendBonusEq = (bonusEqDiv) => {
+    eq.bonusDivVals = numsTotalsArr(eq.eqDivNumsClass);
+    eq.bonusDivObj = buildEqDiv(eq.bonusEqDiv, eq.bonusDivVals);
+    eq.bonusCheckBtn = appendBtnToEqDiv(eq.bonusEqDiv);
+    eq.bonusDivNums = strHasNum(eq.bonusDivObj);
+    for (i = 0; i < eq.bonusDivNums.length; i++) {
+        replaceWithInputBox(i, eq.bonusDivNums);
+    }
+    // //hide first two totals - use them later for advance level
+    eq.bonusEq = eq.bonusEqDiv.children;
+    for (i = 0; i < eq.bonusEq.length - 2; i++) {
+        eq.bonusEq[i].style.visibility = "hidden";
+    }
+}
+
+let bonusEq = () => {
+    console.log(eq.eqWrapperLength);
+ if (eq.eqWrapperLength === 5) {
+    
+        addDivLine();
+        addBonusMsg('Add missing totals');
         
-        //https://stackoverflow.com/questions/6521245/finding-longest-string-in-array
-        let longest = nums.reduce(function(a, b) { return a.length > b.length ? a : b; });
-        return longest;
+        if (allCorrectArray = 5) {
+            // eq.bonusEqDiv = appendEqDiv();
+            // appendBonusEq(eq.bonusEqDiv);
+            // console.log(eq.bonusDivNums);
+            // eq.bonusCheckBtn.addEventListener('click', () => {
+            //     eq.userInput = document.querySelectorAll('.user-input');
+            //     eq.userInput = eq.userInput[eq.userInput.length - 1];
+
+            //     let chkBonusEqAns = chkCorrect(eq.userInput.value, eq.bonusDivVals[2]);
+                
+            //     styleAnswer(chkBonusEqAns, eq.checkIcon, eq.bonusEqDiv, eq.checkBtn, eq.bonusDivNums);
+            //     console.log(eq.eqDivNums);
+            //     addBonusMsg('You got 200 in bonus');
+            //     let bonusScore = 200;
+            //     //change button message to bonus score amount
+            //     eq.BonusCheckBtn.innerText = bonusScore;
+            //     //add bonus points to scoreboard
+            //     updateScrBrd(bonusScore);
+
+            // });
+            play('bonus');
+        }
+        console.log('here');
+        return false;
     }
-   
-//////CHECK FOR CORRECT ANSWER
+}
 
-
-
-    //check if equation is correct
-    let checkCorrect = (removedValue, eqWrapperLength) => {
-      
-            //get user input 
-            let userInput = document.querySelectorAll(".user-input")[eqWrapperLength].value;
-            let check = document.createElement('div');
-            check.classList.add('check');
-            
-            //compare user input to removed value
-            if (parseInt(userInput) === parseInt(removedValue)) {
-                document.querySelectorAll(".equation")[eqWrapperLength].appendChild(check).innerHTML = '<i class="far fa-check-square"></i>';
-                allCorrectArray.push('correct');
-                //update score
-                let score = parseInt(checkForNumberSizes(eqDivArray)*10);
-                document.querySelectorAll(".check-btn")[eqWrapperLength].innerText = parseInt(score);
-                let accScore = document.querySelector('.score-board').innerText;
-                accScore = parseInt(accScore) + parseInt(score);
-                document.querySelector('.score-board').innerText = accScore;
-            } else {
-                document.querySelectorAll(".equation")[eqWrapperLength].appendChild(check).innerHTML = '<i class="fas fa-skull-crossbones"></i>';
-                document.querySelectorAll(".check-btn")[eqWrapperLength].innerText = '0';
-            }
-            //turn off buttons after each checked click
-            document.querySelectorAll(".check-btn")[eqWrapperLength].style.pointerEvents = "none";
-            document.querySelectorAll(".equation")[eqWrapperLength].style.backgroundColor = "lightblue";
-            document.querySelectorAll(".equation")[eqWrapperLength].style.borderRadius = "10px";
-            document.querySelectorAll(".answer")[eqWrapperLength].style.color = "blue";
-
-
-        ////POST EQUATION BONUS ACTIVITY
-           //after last equation is complete
-            if (eqWrapperLength === 4) {
-                //add dividing line and bonus message
-                let line = document.createElement('div');
-                line.classList.add('line');
-                document.querySelectorAll(".equation")[eqWrapperLength].parentNode.appendChild(line).innerHTML = '<hr>';
-
-                let bonusMsg = document.createElement('div');
-                bonusMsg.classList.add('bonus-msg');
-                document.querySelectorAll(".equation")[eqWrapperLength].parentNode.appendChild(bonusMsg).innerHTML = 'Add Totals for Bonus';
-
-                //make totals after five equations
-                let totalsDiv = buildEquationDivs(eqWrapper, eqWrapperLength + 1);
-                let totalsDivArray = [totalsDiv.firstDivNumber, totalsDiv.secondDivNumber, totalsDiv.answer];
-                for (i = 0; i < totalsDivArray.length; i++) {
-                    replaceWithInputBox(i, totalsDivArray);
-                }
-
-                //hide first two totals - use then later for advance level
-                let totChildren = eqWrapper.lastChild.children;
-                for (i = 0; i < totChildren.length - 2; i++) {
-                    totChildren[i].style.visibility = "hidden";
-                }
-               
-                //add total scores
-                let totalScores = document.querySelectorAll(".answer");
-                let total = 0;
-                for (i = 0; i < totalScores.length-1; i++) {
-                    if (totalScores[i].children.length > 0) {
-                        total += parseInt(totalScores[i].children[0].value);
-                    }else{
-                        total += parseInt(totalScores[i].innerText);
-                    }
-                }
-               
-                //add event listener for bonus points
-                eqWrapper.lastChild.lastChild.addEventListener("click", () => {
-                    let userInputArray = document.querySelectorAll('input');
-                    //check if all five equations are completed and correct
-                    let missingInput = () => {
-                        for(i=0;i<userInputArray.length-3;i++){
-                            if(userInputArray[i].value === ''){
-                                return true;
-                            }else{
-                                return false;
-                            }
-                        }
-                    }
-                    missingInput();
-                   
-                    if(missingInput() === false){
-                        if(allCorrectArray.length === 5){
-                                                   
-                            if(total === parseInt(eqWrapper.lastChild.lastChild.previousSibling.firstChild.value)){
-                                
-                                document.querySelector('.bonus-msg').innerText = "Yay, you got the bonus";
-                                let bonusScore = 200;
-                                //change button message to bonus score amount
-                                eqWrapper.lastChild.lastChild.innerText = bonusScore;
-                                //add bonus points to scoreboard
-                                let currentScore = parseInt(document.querySelector('.score-board').innerText);
-                                document.querySelector('.score-board').innerText = currentScore + parseInt(bonusScore);
-                            }
-                        }
-                    }else{
-                        eqWrapper.lastChild.lastChild.innerText = '0';
-                        document.querySelector('.bonus-msg').innerText = "Sorry - you must get 5 correct answers to play bonus";
-                    }
-                });
-                //end play
-                return false;
-            }
-            
-            play();
-        
+let chkAnswer = (eq, bonus) => {
+    let chkEqAns = chkCorrect(eq.userInput.value, eq.removedValue);
+    styleAnswer(chkEqAns, eq.checkIcon, eq.eqDiv, eq.checkBtn, eq.eqDivNums,bonus);
+    styleChkdEq(eq.checkBtn, eq.eqDiv, eq.answer);
+    if (eq.eqWrapperLength < 5) {
+     
+        play();
     }
-   
-    document.querySelectorAll('.user-input')[eqWrapperLength].addEventListener("keydown", function(e) {
-       
-        if(e.code === "Enter" || e.code === "Space"){
-            eqWrapperLength.value = eqWrapperLength.value + 1
-       
-       checkCorrect(removedValue, eqWrapperLength);
-       document.querySelectorAll('.user-input')[eqWrapperLength].disabled = "true";
+    else{
+        bonusEq();
     }
+}
+
+let eq = {}
+
+//MAIN PLAY FUNCTIONS
+let play = (bonus) => {
+    
+    if(bonus !== 'bonus'){
+        eq.eqDivVals = eqVals();
+    }else{
+        eq.eqDivVals = numsTotalsArr(eq.eqDivNumsClass);
+    }
+    eq.eqDiv = appendEqDiv();
+    eq.divObj = buildEqDiv(eq.eqDiv, eq.eqDivVals);
+    eq.checkBtn = appendBtnToEqDiv(eq.eqDiv);
+    eq.checkIcon = appendChkIcon();
+    eq.eqDivNums = strHasNum(eq.divObj);
+    eq.eqDivNumsClass = getNumsClass(eq.eqDivNums);
+    eq.randomIndex = Math.floor(Math.random() * eq.eqDivNums.length)
+    eq.removedValue = removeIndexFromDivArray(eq.randomIndex, eq.eqDivNums);
+    replaceWithInputBox(eq.randomIndex, eq.eqDivNums);
+    eq.answer = document.querySelectorAll('.answer');
+    eq.answer = eq.answer[eq.answer.length - 1];
+    eq.userInput = document.querySelectorAll('.user-input');
+    eq.userInput = eq.userInput[eq.userInput.length - 1];
+
+    eq.scoreBoard = document.querySelector('.score-board');
+    eq.eqWrapperLength = eqWrapper.children.length;
+
+    eq.checkBtn.addEventListener("click", () => {
+        chkAnswer(eq,bonus);
     });
-    //call check correct for each equation
-    document.querySelectorAll(".check-btn")[eqWrapperLength].addEventListener("click", () => {
-        checkCorrect(removedValue, eqWrapperLength);
+    eq.userInput.addEventListener('keydown', (e) => {
+        if (e.keyCode === 13 || e.keyCode === 32) {
+            chkAnswer(eq,bonus);
+        }
     });
 }
 
 play();
 
+
 ////TIME OUT FUNCTIONS
- let timedOut = () => {
+let timedOut = () => {
     //stop clickable buttons after
     document.querySelector('.eq-wrapper').lastChild.lastChild.style.pointerEvents = "none";
     let eqDivs = document.querySelectorAll(".equation");
-    for(i=0;i<eqDivs.length;i++){
+    for (i = 0; i < eqDivs.length; i++) {
         eqDivs[i].style.pointerEvents = "none";
     }
 }
@@ -235,12 +303,12 @@ let timer = () => {
                 timedOut();
             } else {
                 fishpic++;
-                
-                fish.style.left = fishpic + 'px';
-                timerText.innerText = 60-(fishpic/10).toFixed(0);
+
+                fish.style.left = (fishpic/6) -9 + '%';
+                timerText.innerText = 60 - (fishpic / 10).toFixed(0);
             }
         }
-        let int = setInterval(movefish, 100);
+        let int = setInterval(movefish, 10);
     }
     fishInt();
 }
@@ -257,35 +325,17 @@ reset();
 
 
 
+// let eqWrapperLength = eqWrapper.children.length;
+// let eqDiv = appendEqDiv();
+// let eqDivVals = eqVals();
+// let divObj = buildEqDiv(eqDiv, eqDivVals);
+// let checkBtn = appendBtnToEqDiv(eqDiv);
+// let checkIcon = appendChkIcon();
+// let eqDivNums = strHasNum(divObj);
+// let eqDivNumsClass = getNumsClass(eqDivNums);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// let randomIndex = Math.floor(Math.random() * eqDivNums.length)
+// let removedValue = removeIndexFromDivArray(randomIndex, eqDivNums);
+// let userInput = document.querySelectorAll('.user-input');
+// userInput = (userInput[userInput.length - 1]);
+// let answer = document.querySelector('.answer');

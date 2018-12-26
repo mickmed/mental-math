@@ -22,9 +22,15 @@ header{
     background-color:lemonchiffon;
     line-height: 40px;
     padding:10px;
+    position:relative;
+
+}
+.title, .right-panel{
+    z-index:2;
 }
 .right-panel{
     display:flex;
+    
 }
 .score-board{
     font-size:50px;
@@ -116,16 +122,21 @@ footer{
 }
 .fish{
     position:absolute;
-    left:10px;
+    left:-10%;
+    
 }
 .fishpic{
+    position:absolute;
     height:50px;
+    /*z-index: -1;*/
+    
 }
 .timer{
     font-size:30px;
     font-family: 'Ubuntu', sans-serif;
     letter-spacing:2px;
     color:lightblue;
+    margin-right:50px;
 }
 
 /*////MEDIA QUERIES START HERE*/
@@ -159,12 +170,13 @@ footer{
     }
     .equation{    
         padding:5px;
+        text-align:right;
     }
     .equation div{
         width:40px;
         letter-spacing: 2px;
         font-size:40px;
-        padding:0px 40px;
+        padding:0px 40px 0px 40px;
     }
     .eq-wrapper div input[type='text']{
         width:80px;
@@ -345,15 +357,15 @@ footer{
 /*KEY FRAMES HERE*/
 
 @keyframes boxspinner{
-    0%{transform:scale(1.05)}
-    25%{transform:scale(1.06)}
+    0%{transform:translate(-500px)}
+  /*  25%{transform:scale(1.06)}
     50%{transform:scale(1.07)}
-    75%{transform:scale(1.06)}
-    100%{{transform:scale(1.0)}}
+    75%{transform:scale(1.06)}*/
+    100%{{transform:scale(0px)}}
 }
 
 .equation{
-    animation:boxspinner 100ms ease-in-out;
+    animation:boxspinner .5s ease-in-out;
 }
 
 
