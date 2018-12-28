@@ -1,6 +1,14 @@
 //set array to collect correct answers
-let allCorrectArray = [];
-let eqWrapper = document.querySelector('.eq-wrapper');
+
+
+let eq = {}
+eq.level = 0;
+eq.allCorrectArray = [];
+eqWrapper = document.querySelector('.eq-wrapper');
+msgBrd = document.querySelector('.message-board');
+msgBrdDiv = document.querySelector('.message-board div');
+resetBtn = document.querySelector('.reset-btn');
+
 
 let randomNum = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -14,9 +22,9 @@ let appendEqDiv = () => {
     return eqDiv;
 }
 
-let eqVals = () => {
-    let firstNum = randomNum(1, 100);
-    let secondNum = randomNum(1, 100);
+let eqVals = (a, b) => {
+    let firstNum = randomNum(a, b);
+    let secondNum = randomNum(a, b);
     let answer = firstNum + secondNum;
     return [firstNum, secondNum, answer];
 }
@@ -119,8 +127,8 @@ let styleAnswer = (chkCorrect, checkIcon, eqDiv, checkBtn, eqDivArray, bonus) =>
         let score = parseInt(chkNumLength(eqDivArray) * 10);
         updateScrBrd(score);
         checkBtn.innerText = parseInt(score);
-        if(bonus !== 'bonus'){
-            allCorrectArray.push('correct');
+        if (bonus !== 'bonus') {
+            eq.allCorrectArray.push('correct');
         }
     } else {
         eqDiv.appendChild(checkIcon).innerHTML = '<i class="fas fa-skull-crossbones"></i>';
@@ -128,9 +136,9 @@ let styleAnswer = (chkCorrect, checkIcon, eqDiv, checkBtn, eqDivArray, bonus) =>
     }
 }
 
-let styleChkdEq = (checkBtn, eqDiv, answer) => {
-    console.log('here');
-    checkBtn.style.pointerEvents = "none";
+let styleChkdEq = (eqDiv, answer) => {
+
+    eqDiv.style.pointerEvents = "none";
     eqDiv.style.backgroundColor = "lightblue";
     eqDiv.style.borderRadius = "10px";
     answer.style.color = "blue";
@@ -194,62 +202,100 @@ let appendBonusEq = (bonusEqDiv) => {
 }
 
 let bonusEq = () => {
-    console.log(eq.eqWrapperLength);
- if (eq.eqWrapperLength === 5) {
-    
+
+    if (eq.eqWrapperLength > 4 && eq.eqWrapperLength < 6) {
+        console.log(eq.eqWrapperLength);
         addDivLine();
         addBonusMsg('Add missing totals');
-        
-        if (allCorrectArray = 5) {
-            // eq.bonusEqDiv = appendEqDiv();
-            // appendBonusEq(eq.bonusEqDiv);
-            // console.log(eq.bonusDivNums);
-            // eq.bonusCheckBtn.addEventListener('click', () => {
-            //     eq.userInput = document.querySelectorAll('.user-input');
-            //     eq.userInput = eq.userInput[eq.userInput.length - 1];
 
-            //     let chkBonusEqAns = chkCorrect(eq.userInput.value, eq.bonusDivVals[2]);
-                
-            //     styleAnswer(chkBonusEqAns, eq.checkIcon, eq.bonusEqDiv, eq.checkBtn, eq.bonusDivNums);
-            //     console.log(eq.eqDivNums);
-            //     addBonusMsg('You got 200 in bonus');
-            //     let bonusScore = 200;
-            //     //change button message to bonus score amount
-            //     eq.BonusCheckBtn.innerText = bonusScore;
-            //     //add bonus points to scoreboard
-            //     updateScrBrd(bonusScore);
+        play('bonus');
 
-            // });
-            play('bonus');
-        }
-        console.log('here');
-        return false;
+
+
+        // eq.bonusEqDiv = appendEqDiv();
+        // appendBonusEq(eq.bonusEqDiv);
+        // console.log(eq.bonusDivNums);
+        // eq.bonusCheckBtn.addEventListener('click', () => {
+        //     eq.userInput = document.querySelectorAll('.user-input');
+        //     eq.userInput = eq.userInput[eq.userInput.length - 1];
+
+        //     let chkBonusEqAns = chkCorrect(eq.userInput.value, eq.bonusDivVals[2]);
+
+        //     styleAnswer(chkBonusEqAns, eq.checkIcon, eq.bonusEqDiv, eq.checkBtn, eq.bonusDivNums);
+        //     console.log(eq.eqDivNums);
+        //     addBonusMsg('You got 200 in bonus');
+        //     let bonusScore = 200;
+        //     //change button message to bonus score amount
+        //     eq.BonusCheckBtn.innerText = bonusScore;
+        //     //add bonus points to scoreboard
+        //     updateScrBrd(bonusScore);
+
+        // });
+
+
+
+
+
+
+
     }
+
+
+
+
 }
 
 let chkAnswer = (eq, bonus) => {
     let chkEqAns = chkCorrect(eq.userInput.value, eq.removedValue);
-    styleAnswer(chkEqAns, eq.checkIcon, eq.eqDiv, eq.checkBtn, eq.eqDivNums,bonus);
-    styleChkdEq(eq.checkBtn, eq.eqDiv, eq.answer);
-    if (eq.eqWrapperLength < 5) {
-     
-        play();
+    styleAnswer(chkEqAns, eq.checkIcon, eq.eqDiv, eq.checkBtn, eq.eqDivNums, bonus);
+    styleChkdEq(eq.eqDiv, eq.answer);
+
+    if (eq.eqWrapperLength === 5) {
+        if (eq.allCorrectArray.length === 5) {
+            bonusEq();
+        } else {
+            clearInterval(eq.int);
+            eq.userInput.removeEventListener('keydown', clkChkAns);
+            
+            console.log(msgBrdDiv.innerText);
+            msgBrdDiv.innerText = "";
+            msgBrdDiv.innerText = 'test';
+            msgBrd.style.display = "flex";
+            eqWrapper.style.display = "none";
+            reset();
+        }
     }
-    else{
-        bonusEq();
+    if (bonus === 'bonus') {
+        clearInterval(eq.int);
+        eq.userInput.removeEventListener('keydown', clkChkAns);
+        reset();
+    }
+    if (eq.eqWrapperLength < 5) {
+        play();
     }
 }
 
-let eq = {}
+let keyChkAns = (e) => {
+    if (e.keyCode === 13 || e.keyCode === 32) {
+        chkAnswer(eq, eq.bonus);
+    }
+}
+
+let clkChkAns = () => {
+    chkAnswer(eq, eq.bonus);
+}
+
 
 //MAIN PLAY FUNCTIONS
 let play = (bonus) => {
-    
-    if(bonus !== 'bonus'){
-        eq.eqDivVals = eqVals();
-    }else{
+    eq.bonus = bonus;
+    if (eq.bonus !== 'bonus') {
+        eq.eqDivVals = eqVals(eq.vals.a, eq.vals.b);
+    } else {
         eq.eqDivVals = numsTotalsArr(eq.eqDivNumsClass);
     }
+
+
     eq.eqDiv = appendEqDiv();
     eq.divObj = buildEqDiv(eq.eqDiv, eq.eqDivVals);
     eq.checkBtn = appendBtnToEqDiv(eq.eqDiv);
@@ -266,28 +312,50 @@ let play = (bonus) => {
 
     eq.scoreBoard = document.querySelector('.score-board');
     eq.eqWrapperLength = eqWrapper.children.length;
+    console.log(eq.eqWrapperLength);
 
-    eq.checkBtn.addEventListener("click", () => {
-        chkAnswer(eq,bonus);
-    });
-    eq.userInput.addEventListener('keydown', (e) => {
-        if (e.keyCode === 13 || e.keyCode === 32) {
-            chkAnswer(eq,bonus);
-        }
-    });
+    eq.checkBtn.addEventListener("click", clkChkAns)
+    eq.userInput.addEventListener('keydown', keyChkAns);
 }
 
-play();
+let start = () => {
+    msgBrd.style.display = "none";
+
+    eqWrapper.style.display = "flex";
+    if (eq.eqWrapperLength > 0) {
+        eqWrapper.innerHTML = "";
+        eq.allCorrectArray = [];
+    }
+
+    document.querySelector('.reset-btn').removeEventListener('click', start);
+    play();
+    timer();
+}
+
+let reset = () => {
+    msgBrd.style.display = "flex";
+    
+    eq.level = eq.level + 1;
+    eq.vals = new Object;
+    eq.vals.a = 1;
+    eq.vals.b = eq.level * 20;
+    eq.level === 1 ? msgBrdDiv.innerText = "Please click start to begin" : msgBrdDiv.innerText = `Move to level ${eq.level}`;
+    eq.level === 1 ? resetBtn.innerText = "start" : resetBtn.innerText = `level${eq.level}`;
+    
+
+
+    console.log(eq.level);
+
+    document.querySelector('.reset-btn').addEventListener('click', start);
+
+}
+reset();
 
 
 ////TIME OUT FUNCTIONS
 let timedOut = () => {
-    //stop clickable buttons after
-    document.querySelector('.eq-wrapper').lastChild.lastChild.style.pointerEvents = "none";
-    let eqDivs = document.querySelectorAll(".equation");
-    for (i = 0; i < eqDivs.length; i++) {
-        eqDivs[i].style.pointerEvents = "none";
-    }
+  
+    reset();
 }
 
 let timer = () => {
@@ -297,46 +365,26 @@ let timer = () => {
     let fishInt = () => {
         let movefish = () => {
             if (fishpic == 600) {
-                clearInterval(int);
-                // btmLeftFish();
+                clearInterval(eq.int);
+                
                 timerText.innerText = "sorry, you're out of time";
                 fish.style.visibility = "hidden";
                 timedOut();
             } else {
                 fishpic++;
 
-                fish.style.left = (fishpic/6) -4 + '%';
+                fish.style.left = (fishpic / 6) - 4 + '%';
                 timerText.innerText = 60 - (fishpic / 10).toFixed(0);
             }
         }
-        let int = setInterval(movefish, 100);
+        eq.int = setInterval(movefish, 100);
     }
     fishInt();
 }
-timer();
-
-let reset = () => {
-    document.querySelector('.reset-btn').addEventListener('click', () => {
-        location.reload();
-    })
-}
-reset();
 
 
 
 
 
-// let eqWrapperLength = eqWrapper.children.length;
-// let eqDiv = appendEqDiv();
-// let eqDivVals = eqVals();
-// let divObj = buildEqDiv(eqDiv, eqDivVals);
-// let checkBtn = appendBtnToEqDiv(eqDiv);
-// let checkIcon = appendChkIcon();
-// let eqDivNums = strHasNum(divObj);
-// let eqDivNumsClass = getNumsClass(eqDivNums);
 
-// let randomIndex = Math.floor(Math.random() * eqDivNums.length)
-// let removedValue = removeIndexFromDivArray(randomIndex, eqDivNums);
-// let userInput = document.querySelectorAll('.user-input');
-// userInput = (userInput[userInput.length - 1]);
-// let answer = document.querySelector('.answer');
+

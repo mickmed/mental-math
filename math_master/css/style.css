@@ -35,12 +35,22 @@ header{
 .score-board{
     font-size:50px;
     line-height: 40px;
+
+}
+.message-board{
+    display: none;
+    justify-content: center;
+    margin-top:50px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 40px;
+
 }
 .eq-wrapper{
     display:flex;
     justify-content:center;
     flex-direction: column;
     font-family: 'Ubuntu', sans-serif;
+    display:none;
 }
 .equation{
     text-align:right;
