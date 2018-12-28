@@ -4,10 +4,11 @@
 let eq = {}
 eq.level = 0;
 eq.allCorrectArray = [];
-eqWrapper = document.querySelector('.eq-wrapper');
-msgBrd = document.querySelector('.message-board');
-msgBrdDiv = document.querySelector('.message-board div');
-resetBtn = document.querySelector('.reset-btn');
+let eqWrapper = document.querySelector('.eq-wrapper');
+let msgBrd = document.querySelector('.message-board');
+let msgBrdDiv = document.querySelector('.message-board div');
+let resetBtn = document.querySelector('.reset-btn');
+let timerText = document.querySelector('.timer').innerText;
 
 
 let randomNum = (min, max) => {
@@ -124,12 +125,15 @@ let chkCorrect = (value1, value2) => {
 let styleAnswer = (chkCorrect, checkIcon, eqDiv, checkBtn, eqDivArray, bonus) => {
     if (chkCorrect === true) {
         eqDiv.appendChild(checkIcon).innerHTML = '<i class="far fa-check-square"></i>';
-        let score = parseInt(chkNumLength(eqDivArray) * 10);
-        updateScrBrd(score);
-        checkBtn.innerText = parseInt(score);
+        let score = 0;
         if (bonus !== 'bonus') {
             eq.allCorrectArray.push('correct');
+            score = parseInt(chkNumLength(eqDivArray) * 10);
+        }else{
+            score = parseInt((chkNumLength(eqDivArray) * 10) + (eq.level * 100));
         }
+        checkBtn.innerText = parseInt(score);
+        updateScrBrd(score);
     } else {
         eqDiv.appendChild(checkIcon).innerHTML = '<i class="fas fa-skull-crossbones"></i>';
         checkBtn.innerText = '0';
@@ -204,45 +208,12 @@ let appendBonusEq = (bonusEqDiv) => {
 let bonusEq = () => {
 
     if (eq.eqWrapperLength > 4 && eq.eqWrapperLength < 6) {
-        console.log(eq.eqWrapperLength);
+        
         addDivLine();
-        addBonusMsg('Add missing totals');
+        addBonusMsg('Add missing total(s)');
 
         play('bonus');
-
-
-
-        // eq.bonusEqDiv = appendEqDiv();
-        // appendBonusEq(eq.bonusEqDiv);
-        // console.log(eq.bonusDivNums);
-        // eq.bonusCheckBtn.addEventListener('click', () => {
-        //     eq.userInput = document.querySelectorAll('.user-input');
-        //     eq.userInput = eq.userInput[eq.userInput.length - 1];
-
-        //     let chkBonusEqAns = chkCorrect(eq.userInput.value, eq.bonusDivVals[2]);
-
-        //     styleAnswer(chkBonusEqAns, eq.checkIcon, eq.bonusEqDiv, eq.checkBtn, eq.bonusDivNums);
-        //     console.log(eq.eqDivNums);
-        //     addBonusMsg('You got 200 in bonus');
-        //     let bonusScore = 200;
-        //     //change button message to bonus score amount
-        //     eq.BonusCheckBtn.innerText = bonusScore;
-        //     //add bonus points to scoreboard
-        //     updateScrBrd(bonusScore);
-
-        // });
-
-
-
-
-
-
-
     }
-
-
-
-
 }
 
 let chkAnswer = (eq, bonus) => {
@@ -255,11 +226,7 @@ let chkAnswer = (eq, bonus) => {
             bonusEq();
         } else {
             clearInterval(eq.int);
-            eq.userInput.removeEventListener('keydown', keyChkAns);
-
-           
-            
-           
+            eq.userInput.removeEventListener('keydown', keyChkAns);           
             reset();
         }
     }
