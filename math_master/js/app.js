@@ -255,19 +255,17 @@ let chkAnswer = (eq, bonus) => {
             bonusEq();
         } else {
             clearInterval(eq.int);
-            eq.userInput.removeEventListener('keydown', clkChkAns);
+            eq.userInput.removeEventListener('keydown', keyChkAns);
+
+           
             
-            console.log(msgBrdDiv.innerText);
-            msgBrdDiv.innerText = "";
-            msgBrdDiv.innerText = 'test';
-            msgBrd.style.display = "flex";
-            eqWrapper.style.display = "none";
+           
             reset();
         }
     }
     if (bonus === 'bonus') {
         clearInterval(eq.int);
-        eq.userInput.removeEventListener('keydown', clkChkAns);
+        eq.userInput.removeEventListener('keydown', keyChkAns);
         reset();
     }
     if (eq.eqWrapperLength < 5) {
@@ -314,13 +312,13 @@ let play = (bonus) => {
     eq.eqWrapperLength = eqWrapper.children.length;
     console.log(eq.eqWrapperLength);
 
-    eq.checkBtn.addEventListener("click", clkChkAns)
+    eq.checkBtn.addEventListener("click", clkChkAns);
     eq.userInput.addEventListener('keydown', keyChkAns);
 }
 
 let start = () => {
     msgBrd.style.display = "none";
-
+    eqWrapper.style.opacity = 1;
     eqWrapper.style.display = "flex";
     if (eq.eqWrapperLength > 0) {
         eqWrapper.innerHTML = "";
@@ -333,20 +331,22 @@ let start = () => {
 }
 
 let reset = () => {
+   
     msgBrd.style.display = "flex";
+    eqWrapper.style.opacity = .25;
     
     eq.level = eq.level + 1;
     eq.vals = new Object;
-    eq.vals.a = 1;
-    eq.vals.b = eq.level * 20;
+    eq.vals.a = eq.level * 10;
+    eq.vals.b = eq.level * 50;
     eq.level === 1 ? msgBrdDiv.innerText = "Please click start to begin" : msgBrdDiv.innerText = `Move to level ${eq.level}`;
     eq.level === 1 ? resetBtn.innerText = "start" : resetBtn.innerText = `level${eq.level}`;
     
 
-
+    document.querySelector('.reset-btn').addEventListener('click', start);
     console.log(eq.level);
 
-    document.querySelector('.reset-btn').addEventListener('click', start);
+   
 
 }
 reset();
@@ -354,7 +354,7 @@ reset();
 
 ////TIME OUT FUNCTIONS
 let timedOut = () => {
-  
+     
     reset();
 }
 
