@@ -1,7 +1,6 @@
-//set array to collect correct answers
 
 
-let eq = {}
+let eq = {} //equation object
 eq.level = 0;
 eq.allCorrectArray = [];
 let eqWrapper = document.querySelector('.eq-wrapper');
@@ -9,11 +8,13 @@ let msgBrd = document.querySelector('.message-board');
 let msgBrdDiv = document.querySelector('.message-board div');
 let resetBtn = document.querySelector('.reset-btn');
 let timerText = document.querySelector('.timer').innerText;
+let opBtns = document.querySelectorAll('.btn-operators')[0];
 
 
 let randomNum = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
 
 
 let appendEqDiv = () => {
@@ -24,16 +25,23 @@ let appendEqDiv = () => {
 }
 
 let eqVals = (a, b) => {
+    console.log(eq.gameOperator)
     let firstNum = randomNum(a, b);
     let secondNum = randomNum(a, b);
-    let answer = firstNum + secondNum;
+    let answer = 0;
+    if(eq.gameOperator === "+"){
+        answer = firstNum  + secondNum;
+    }
+     if(eq.gameOperator === "-"){
+        answer = firstNum  - secondNum;
+    }
     return [firstNum, secondNum, answer];
 }
 
 let buildEqDiv = (eqDiv, eqVals) => {
     let divObj = {};
-    let divClass = ["firstNumber", "operand", "secondNumber", "equalsSign", "answer"];
-    let divText = [eqVals[0], "+", eqVals[1], "=", eqVals[2]];
+    let divClass = ["firstNumber", "operator", "secondNumber", "equalsSign", "answer"];
+    let divText = [eqVals[0], eq.gameOperator, eqVals[1], "=", eqVals[2]];
 
     for (i = 0; i < divClass.length; i++) {
         divObj[divClass[i]] = document.createElement("div");
@@ -259,8 +267,6 @@ let play = (bonus) => {
     } else {
         eq.eqDivVals = numsTotalsArr(eq.eqDivNumsClass);
     }
-
-
     eq.eqDiv = appendEqDiv();
     eq.divObj = buildEqDiv(eq.eqDiv, eq.eqDivVals);
     eq.checkBtn = appendBtnToEqDiv(eq.eqDiv);
@@ -292,9 +298,13 @@ let start = () => {
         eq.allCorrectArray = [];
     }
 
-    document.querySelector('.reset-btn').removeEventListener('click', start);
+    resetBtn.removeEventListener('click', start);
     play();
     timer();
+}
+
+let splshMsg = () => {
+   
 }
 
 let reset = () => {
@@ -306,12 +316,30 @@ let reset = () => {
     eq.vals = new Object;
     eq.vals.a = eq.level * 10;
     eq.vals.b = eq.level * 50;
-    eq.level === 1 ? msgBrdDiv.innerText = "Please click start to begin" : msgBrdDiv.innerText = `Move to level ${eq.level}`;
+    eq.level === 1 ? msgBrdDiv.innerText : msgBrdDiv.innerText = `Move to level ${eq.level}`;
     eq.level === 1 ? resetBtn.innerText = "start" : resetBtn.innerText = `level${eq.level}`;
     
 
-    document.querySelector('.reset-btn').addEventListener('click', start);
-    console.log(eq.level);
+   
+
+
+    let opBtns = document.querySelectorAll('.btn-operators')[0];
+        opBtns.addEventListener('click', function(e){
+            for(i=0;i<opBtns.children.length;i++){
+            opBtns.children[i].style.backgroundColor = 'lightyellow';
+            console.log(opBtns);
+            }
+            e.target.style.backgroundColor = "yellow";
+            eq.gameOperator = e.target.innerText;
+            console.log(typeof eq.gameOperator);
+            if(typeof eq.gameOperator === 'string'){
+             
+            resetBtn.addEventListener('click', start);
+            }
+        });
+    
+   
+   
 
    
 
@@ -321,7 +349,9 @@ reset();
 
 ////TIME OUT FUNCTIONS
 let timedOut = () => {
-     
+    console.log(eq.userInput);
+    eq.userInput.disabled = true;
+    eq.checkBtn.disabled = true;
     reset();
 }
 
