@@ -5,11 +5,24 @@
 
 body{
     background-color: lightblue;
-    margin:20px;
-    background-color:blue;
     color:yellow;
+    height:90vh;
+    width:90vw;
+    margin:20px auto;
 }
+
+main{
+    background-image:url("../img/math_board.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height:100%;
+    padding:10px;
+    border-radius: 10px;
+}
+
 header{
+    
     font-size:30px;
     display:flex;
     justify-content: space-between;
@@ -17,7 +30,7 @@ header{
     font-family: 'Ubuntu', sans-serif;
     color:darkred;
     text-shadow:.5px .5px black;
-    margin-bottom:10px;
+   
     border-radius:5px;
     background-color:lemonchiffon;
     line-height: 40px;
@@ -38,20 +51,35 @@ header{
 
 }
 .message-board{
-    display: flex;
-   
-    flex-direction:column;
-    align-items: center;
-    margin-top:50px;
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items:center;
     font-family: 'Ubuntu', sans-serif;
-    font-size: 40px;
+    font-size: 30px;
+    margin-top:30px;
+   
+    text-align:center;
+}
+
+.message-inner{
+    background-color: lightyellow;
+    border:1px solid white;
+    border-radius:10px;
+    /*background-image:url("../img/math_board2.gif");*/
+    background-color:black;
+    background-repeat: no-repeat;
+    background-size: cover;
 
 }
 .message-board div{
-    margin:0px 20px;
     padding:20px;
 }
-.btn-operators button, .reset-btn{
+
+.btn-operators button, .play-btn, .reset-btn{
     width:100px;
     height:50px;
     font-size:30px;
@@ -68,17 +96,19 @@ header{
     justify-content:space-around;
 }*/
 .eq-wrapper{
-    display:flex;
+    
     justify-content:center;
     flex-direction: column;
     font-family: 'Ubuntu', sans-serif;
     display:none;
+    margin:5px;
+
 }
 .equation{
     text-align:right;
     display:flex;
     align-items:center;
-    padding:12px 15px;
+    padding:10px 15px;
     margin-bottom: 2px;
 }
 .equation div{
@@ -121,15 +151,10 @@ div.operator, div.equalsSign{
 .check-btn{
     margin-left:50px;
 }
-/*.reset-btn{
-    height:40px;
-    font-size:20px;
-    border:1px solid darkred;
-    border-radius:4px;
-}*/
+
 .bonus-msg{
     font-family: 'Ubuntu', sans-serif;
-    font-size:30px;
+    font-size:16px;
 }
 .check{
     color:yellow;
@@ -143,8 +168,8 @@ div.operator, div.equalsSign{
 
 hr{
     background-color:yellow;
-    height:5px;
-    margin-top:5px;
+    height:3px;
+    margin-top:3px;
 }
 
 footer{
@@ -157,7 +182,7 @@ footer{
 }
 .fish{
     position:absolute;
-    left:-10%;
+    /*left:-10%;*/
     
 }
 .fishpic{
@@ -191,7 +216,7 @@ footer{
         font-size:35px;
         line-height: 45px;
     }
-    .reset-btn{
+    .play-btn, .reset-btn{
         height:40px;
         font-size:30px;
         width:80px;
@@ -259,7 +284,7 @@ footer{
         font-size:25px;
         line-height: 35px;
     }
-    .reset-btn{
+    .play-btn, .reset-btn{
         height:30px;
         font-size:20px;
         width:50px;
@@ -331,7 +356,7 @@ footer{
         font-size:15px;
         line-height: 25px;
     }
-    .reset-btn{
+    .play-btn, .reset-btn{
         height:20px;
         font-size:10px;
         width:30px;

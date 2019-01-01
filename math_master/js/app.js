@@ -5,11 +5,12 @@ eq.level = 0;
 eq.allCorrectArray = [];
 let eqWrapper = document.querySelector('.eq-wrapper');
 let msgBrd = document.querySelector('.message-board');
-let msgBrdDiv = document.querySelector('.message-board div');
-let resetBtn = document.querySelector('.reset-btn');
+let msgBrdInner = document.querySelector('.message-board .message-inner');
+let playBtn = document.querySelector('.play-btn');
+let resetBtn = document.querySelector('.reset-btn')
 let timerText = document.querySelector('.timer').innerText;
 let opBtns = document.querySelectorAll('.btn-operators')[0];
-
+let fish = document.querySelector('.fish');
 
 let randomNum = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -102,9 +103,7 @@ let replaceWithInputBox = (randomIndex, array) => {
     return array;
 }
 
-let getAnswer = () => {
 
-}
 //get number sizes, if biggest number is 1 digit user gets 10, 20 for 2, 30 for 3;
 let chkNumLength = (eqDivArray) => {
     let nums = [];
@@ -218,7 +217,7 @@ let bonusEq = () => {
     if (eq.eqWrapperLength > 4 && eq.eqWrapperLength < 6) {
         
         addDivLine();
-        addBonusMsg('Add missing total(s)');
+        addBonusMsg('Bonus Round');
 
         play('bonus');
     }
@@ -290,6 +289,10 @@ let play = (bonus) => {
 }
 
 let start = () => {
+    document.body.style.backgroundColor="lightblue"
+    document.querySelector('main').style.backgroundColor="blue"
+    document.querySelector('main').style.backgroundImage="url('img/leaf_border.gif')"
+    document.querySelector('.fish').style.visibility="visible";
     msgBrd.style.display = "none";
     eqWrapper.style.opacity = 1;
     eqWrapper.style.display = "flex";
@@ -298,51 +301,60 @@ let start = () => {
         eq.allCorrectArray = [];
     }
 
-    resetBtn.removeEventListener('click', start);
+    playBtn.removeEventListener('click', start);
     play();
     timer();
 }
 
-let splshMsg = () => {
-   
-}
 
 let reset = () => {
-   
+    resetBtn.addEventListener('click', () => {
+        location.reload();
+    })
+    document.querySelector('main').style.backgroundImage="url('img/math_board.gif')"
+    fish.style.visibility = "hidden";
     msgBrd.style.display = "flex";
-    eqWrapper.style.opacity = .25;
+    eqWrapper.style.opacity = 1;
+    let msg = document.querySelector('.score-board').innerText;
     
     eq.level = eq.level + 1;
     eq.vals = new Object;
     eq.vals.a = eq.level * 10;
     eq.vals.b = eq.level * 50;
-    eq.level === 1 ? msgBrdDiv.innerText : msgBrdDiv.innerText = `Move to level ${eq.level}`;
-    eq.level === 1 ? resetBtn.innerText = "start" : resetBtn.innerText = `level${eq.level}`;
+    if(eq.level === 1){
+        msgBrd.style.display = "flex";
+        msgBrdInner.children[0].innerText='Choose Your Game'
+    }else{
+        msg = msgBrdInner.children[0].innerText='You Scored ' + eq.scoreBoard.innerText;
+        console.log(eq.allCorrectArray)
+        if(eq.allCorrectArray.length === 5){
+            let bnsPntMsg = document.createElement('div')
+            msgBrdInner.children[0].appendChild(bnsPntMsg).innerText = "Plus Bonus " + eq.userInput.innerText
+
+        }
+        msgBrdInner.children[0].innerText='Choose Your Game'
+
+    }
+    eq.level === 1 ? playBtn.innerText = "start" : playBtn.innerText = `level ${eq.level}`;
     
-
-   
-
-
     let opBtns = document.querySelectorAll('.btn-operators')[0];
-        opBtns.addEventListener('click', function(e){
-            for(i=0;i<opBtns.children.length;i++){
+    eq.gameOperator = "+";
+
+    console.log(eq.gameOperator)
+    opBtns.addEventListener('click', function(e){
+        for(i=0;i<opBtns.children.length;i++){
             opBtns.children[i].style.backgroundColor = 'lightyellow';
-            console.log(opBtns);
-            }
-            e.target.style.backgroundColor = "yellow";
-            eq.gameOperator = e.target.innerText;
-            console.log(typeof eq.gameOperator);
-            if(typeof eq.gameOperator === 'string'){
-             
-            resetBtn.addEventListener('click', start);
-            }
-        });
-    
-   
-   
 
-   
+        }
+        e.target.style.backgroundColor = "yellow";
+        eq.gameOperator = e.target.innerText;
+        console.log(typeof eq.gameOperator);
+       
+    });
+     if(typeof eq.gameOperator === 'string'){
 
+            playBtn.addEventListener('click', start);
+        }
 }
 reset();
 
@@ -365,7 +377,7 @@ let timer = () => {
                 clearInterval(eq.int);
                 
                 timerText.innerText = "sorry, you're out of time";
-                fish.style.visibility = "hidden";
+                
                 timedOut();
             } else {
                 fishpic++;
